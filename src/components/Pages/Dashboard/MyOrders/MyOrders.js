@@ -5,19 +5,19 @@ import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
 const MyOrders = () => {
 
     const { user } = useContext(AuthContext)
-    const [myOrders, setMyOrders] = useState('')
+    const [cart, setCart] = useState('')
 
     //filtering orders by email
     useEffect(() => {
         fetch(`http://localhost:5000/bookedList?email=${user?.email}`)
             .then(res => res.json())
-            .then(data => setMyOrders(data))
+            .then(data => setCart(data))
     }, [user?.email])
 
 
     return (
         <div>
-            <h1 className="text-3xl my-5 text-center font-bold">My Products</h1>
+            <h1 className="text-3xl my-5 text-center font-bold">Cart</h1>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -33,17 +33,17 @@ const MyOrders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {myOrders &&
-                            myOrders?.map((myOrder, index) =>
+                        {cart &&
+                            cart?.map((product, index) =>
                                 <tr>
                                     <th>{index + 1}</th>
-                                    <td><img src={myOrder.img} alt="" className='w-20 rounded-xl' /></td>
-                                    <td>{myOrder.pname}</td>
-                                    <td>{myOrder.price}</td>
-                                    <td>{myOrder.price}</td>
-                                    <td>{myOrder.email}</td>
+                                    <td><img src={product.img} alt="" className='w-20 rounded-xl' /></td>
+                                    <td>{product.pname}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.email}</td>
                                     <td>
-                                        <Link to={`/dashboard/payments/${myOrder._id}`}>
+                                        <Link to={`/dashboard/payments/${product._id}`}>
                                             <button className="btn btn-primary mr-2">Pay</button>
                                         </Link>
                                     </td>

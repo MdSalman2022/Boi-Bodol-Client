@@ -34,12 +34,11 @@ const Register = () => {
                 toast.success("Successfuuly Registered")
                 const userInfo = {
                     displayName: data.name,
-                    photoURL: data.photoURL
                 }
                 updateUser(userInfo)
                     .then(() => {
                         navigate('/')
-                        saveUser(data.name, data.email, data.role)
+                        saveUser(data.name, data.email, data.role = "user")
                     })
                     .catch(err => console.log(err))
 
@@ -71,7 +70,7 @@ const Register = () => {
         providerLogin(Provider)
             .then(result => {
                 const user = result.user;
-                saveUser(user.displayName, user.email, user.role = "buyer")
+                saveUser(user.displayName, user.email, user.role = "user")
             })
             .catch(error => console.error(error))
     }
@@ -112,18 +111,8 @@ const Register = () => {
                             className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
-                    <div className="space-y-1 text-sm">
-                        <label for="photoURL" className="block ">Profile image</label>
-                        <input type="text"
-                            {...register("photoURL",
-                                { required: "Photo is required", })}
-                            className="input input-bordered w-full max-w-xs" />
-                        {errors.photoURL && <p className='text-red-500'>{errors.photoURL.message}</p>}
-                    </div>
-                    <select className="select select-primary w-22 max-w-xs" {...register("role", { required: true })}>
-                        <option value="buyer">Buyer</option>
-                        <option value="seller">Seller</option>
-                    </select>
+
+
                     <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
 

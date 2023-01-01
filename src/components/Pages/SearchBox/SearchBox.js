@@ -4,7 +4,7 @@ import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import ProductCard from '../ProductCard/ProductCard';
 import { useForm } from 'react-hook-form';
 
-function Banner() {
+function SearchBox() {
 
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ function Banner() {
 
             <div className="hero-content flex-col lg:flex-row-reverse lg:gap-96 mx-auto text-center">
                 <div>
-                    <h1 className="text-5xl font-bold">Buy&Sell<span className='text-primary'>24</span></h1>
+                    <h1 className="text-5xl font-bold">BoiBodol<span className='text-primary'></span></h1>
                     <p className="py-6">We will help you to get the best deal possible in our marketplace.</p>
                     <div className='max-w-md mx-auto'>
                         <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-2 border-secondary">
@@ -50,22 +50,17 @@ function Banner() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
+
                             </div>
-
-                            {/* <form onSubmit={handleSubmit}>
-                                <input
-                                    className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
-                                    type="text"
-                                    id="search"
-                                    name="search"
-                                    placeholder="What are you looking for?"
-                                    defaultValue={searchText}
-                                />
-                            </form> */}
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <input className='peer h-full w-full outline-none text-sm text-gray-700 pr-32 lg:pr-52 py-10' defaultValue={searchText} type="text" placeholder="What are you looking for" {...register("name", { required: true, maxLength: 80 })} />
+                                <input className='peer h-full w-full outline-none text-sm text-gray-700 pr-32 lg:pr-52 py-10' defaultValue={searchText} type="text" placeholder="Search for a Book" {...register("name", { required: true, maxLength: 80 })} />
                             </form>
-
+                        </div>
+                    </div>
+                    <div className="divider">Or</div>
+                    <div className='max-w-md mx-auto'>
+                        <div className="relative flex items-center w-full h-12 my-10 mx-auto justify-center">
+                            <button className="btn btn-neutral text-secondary">Post an ad</button>
                         </div>
                     </div>
                 </div>
@@ -73,4 +68,4 @@ function Banner() {
         </div>
     )
 }
-export default Banner
+export default SearchBox;

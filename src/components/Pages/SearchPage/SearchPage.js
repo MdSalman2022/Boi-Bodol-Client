@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-import Banner from '../Banner/Banner';
 import ProductCard from '../ProductCard/ProductCard';
+import SearchBox from '../SearchBox/SearchBox';
 
 const SearchPage = () => {
 
@@ -16,7 +16,7 @@ const SearchPage = () => {
 
     return (
         <div className='container mx-auto'>
-            <Banner></Banner>
+            <SearchBox></SearchBox>
             {items.length > 0 ?
                 <h1 className="lg:text-5xl px-4 font-bold">{searchText === "" ? "" : `You searched for "${searchText}"`}</h1>
                 :

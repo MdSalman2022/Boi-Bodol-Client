@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-import Modal from '../../Shared/Modal/Modal';
 import { GoVerified } from 'react-icons/go';
 import toast from 'react-hot-toast';
 
@@ -82,9 +81,9 @@ const ProductCard = ({ item, product, SetProduct }) => {
                                 <label className="btn btn-primary">Only For Buyers</label>
                         }
 
-                        {item &&
+                        {/* {item &&
                             <Modal key={_id} product={product} />
-                        }
+                        } */}
                     </div>
                 </div>
             </div>

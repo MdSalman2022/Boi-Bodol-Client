@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { GoVerified } from 'react-icons/go';
-import Modal from '../../Shared/Modal/Modal';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import ProductCard from '../ProductCard/ProductCard';
 

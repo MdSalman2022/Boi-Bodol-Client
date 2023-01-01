@@ -12,9 +12,57 @@ const CategoryList = () => {
     })
 
     return (
-        <div>
-            <div className="grid grid-cols-1 lg:grid-cols-5 justify-items-center  gap-5">
-                {
+        <div className=''>
+            <div className="grid grid-cols-1 lg:grid-cols-5 justify-items-center  gap-5  ">
+
+                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
+                    <div className="card-body">
+                        <h2 className="card-title">Card title!</h2>
+                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <div className="card-actions justify-center">
+                            <button className="btn btn-neutral text-secondary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="card w-64  bg-base-100 shadow-xl border border-neutral">
+                    <div className="card-body">
+                        <h2 className="card-title">Card title!</h2>
+                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <div className="card-actions justify-center">
+                            <button className="btn btn-neutral text-secondary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
+                    <div className="card-body">
+                        <h2 className="card-title">Card title!</h2>
+                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <div className="card-actions justify-center">
+                            <button className="btn btn-neutral text-secondary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="card w-64  bg-base-100 shadow-xl border border-neutral">
+                    <div className="card-body">
+                        <h2 className="card-title">Card title!</h2>
+                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <div className="card-actions justify-center">
+                            <button className="btn btn-neutral text-secondary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
+                    <div className="card-body">
+                        <h2 className="card-title">Card title!</h2>
+                        <p>If a dog chews shoes whose shoes does he choose?</p>
+                        <div className="card-actions justify-center">
+                            <button className="btn btn-neutral text-secondary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* {
                     categories &&
                     categories?.map(category =>
                         <div key={category.categoryId} className=''>
@@ -23,7 +71,7 @@ const CategoryList = () => {
                             </div>
                             <Link to={`/category/${category.categoryId}`}><button type="button" className="hover:bg-secondary transition-colors hover:text-white mt-5 flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md btn-primary">{category.name}</button></Link>
                         </div>)
-                }
+                } */}
 
             </div>
 

@@ -16,10 +16,10 @@ const DashboardLayout = () => {
     }, [user?.email])
 
     return (
-        <div>
+        <div className='  '>
 
             <Header></Header>
-            <div className="drawer drawer-mobile container mx-auto">
+            <div className="drawer drawer-mobile container mx-auto ">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content ">
 
@@ -32,17 +32,10 @@ const DashboardLayout = () => {
                     <ul className="menu p-4 w-80  text-base-content">
                         <li><Link to='/dashboard'>Dashboard</Link></li>
                         {
-                            role === 'buyer' ?
+                            role === 'user' ?
                                 <>
-                                    <li><Link to='/dashboard/myorders'>My Orders</Link></li>
-                                    {/* <li><Link to='/dashboard/wishlist'>Wishlist</Link></li> */}
-                                </>
-                                :
-                                ''
-                        }
-                        {
-                            role === 'seller' ?
-                                <>
+                                    <li><Link to='/dashboard/wishlist'>Wishlist</Link></li>
+                                    <li><Link to='/dashboard/cart'>My Cart</Link></li>
                                     <li><Link to='/dashboard/addproduct'>Add Product</Link></li>
                                     <li><Link to='/dashboard/myproducts'>My Products</Link></li>
                                     <li><Link to='/dashboard/mybuyers'>My Buyers</Link></li>

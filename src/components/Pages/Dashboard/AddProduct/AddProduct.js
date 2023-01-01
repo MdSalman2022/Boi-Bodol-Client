@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
+import Location from '../../../Shared/Location/Location';
 
 const AddProduct = () => {
 
@@ -34,33 +35,41 @@ const AddProduct = () => {
                         name: data.name,
                         sname: data.sname,
                         price: data.price,
-                        oriprice: data.oriprice,
                         condition: data.condition,
+                        publication: data.publication,
+                        edition: data.edition,
+                        authenticity: data.authenticity,
+                        nagotiable: data.nagotiable,
+                        courier: data.courier,
                         phoneNo: data.phoneNo,
                         location: data.location,
                         description: data.description,
-                        year: data.year,
                         email: data.email,
-                        categoryId: data.categoryId,
-                        img: imgUpload.data.url
+                        img: imgUpload.data.url,
+                        sold: false,
+                        available: true,
+                        trending: false,
+                        featured: false,
+                        urgent: false,
                     }
-                    fetch('http://localhost:5000/categoryitems', {
-                        method: 'POST',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        // headers: {
-                        //     'content-type': 'application/json',
-                        //     authorization: `bearer ${localStorage.getItem('accessToken')}`
-                        // },
-                        body: JSON.stringify(product)
-                    })
-                        .then(res => res.json())
-                        .then(result => {
-                            toast.success(`${product.name} is added successfully`)
-                            Navigate('/dashboard/myproducts')
-                        }
-                        )
+                    console.log(product);
+                    // fetch('http://localhost:5000/categoryitems', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'content-type': 'application/json'
+                    //     },
+                    //     // headers: {
+                    //     //     'content-type': 'application/json',
+                    //     //     authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    //     // },
+                    //     body: JSON.stringify(product)
+                    // })
+                    //     .then(res => res.json())
+                    //     .then(result => {
+                    //         toast.success(`${product.name} is added successfully`)
+                    //         Navigate('/dashboard/myproducts')
+                    //     }
+                    //     )
                 }
             })
 
@@ -71,13 +80,13 @@ const AddProduct = () => {
 
 
     return (
-        <div className=' my-10'>
-            <div className="p-8 space-y-3 rounded-xl bg-base-200 mx-auto">
+        <div className=' my-10   scrollbar-hide'>
+            <div className="p-8 space-y-3 rounded-xl bg-base-200 mx-auto ">
                 <h1 className="text-3xl font-bold text-center">Add A Product</h1>
-                <form onSubmit={handleSubmit(handleProductSubmit)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid grid grid-cols-2">
+                <form onSubmit={handleSubmit(handleProductSubmit)} noValidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid grid grid-cols-2   scrollbar-hide">
 
-                    <div className="mt-5 space-y-1 text-sm">
-                        <label for="name" className="block ">Product Name</label>
+                    <div className="space-y-1 text-sm mt-5">
+                        <label htmlFor="name" className="block ">Book Name</label>
                         <input type="text"
                             {...register("name",
                                 { required: "Name is required", })}
@@ -85,99 +94,126 @@ const AddProduct = () => {
                         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
                     </div>
 
-                    <div className='space-y-1 text-sm'>
-                        <label className="label"><span className="label-text">Photo</span></label>
+                    <div className='space-y-1 text-sm mt-5'>
+                        <label htmlFor="images" className="block label-text">Book Images</label>
+
                         <input type="file"
                             {...register("image",
                                 { required: "Photo is required", })}
-                            className="input input-bordered w-full max-w-xs" />
+                            className="file-input file:text-secondary w-full max-w-xs" />
                         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
                     </div>
 
 
                     <div className='space-y-1 text-sm'>
-                        <label for="categoryId" className="block ">Product Brand</label>
-                        <select className="select select-primary w-full max-w-xs" {...register("categoryId", { required: true })}>
-                            <option value="1" id="412">Apple</option>
-                            <option value="2">Samsung</option>
-                            <option value="3">Xiaomi</option>
-                            <option value="4">Oppo</option>
-                            <option value="5">Oneplus</option>
+                        <label htmlFor="publication" className="block ">Book Publication</label>
+                        <input type="text"
+                            {...register("publication")}
+                            className="input input-bordered w-full max-w-xs" />
+                        {errors.publication && <p className='text-red-500'>{errors.publication.message}</p>}
+
+                    </div>
+                    <div className='space-y-1 text-sm'>
+                        <label htmlFor="edition" className="block ">Book Edition</label>
+                        <input type="text"
+                            {...register("edition")}
+                            className="input input-bordered w-full max-w-xs" />
+                        {errors.edition && <p className='text-red-500'>{errors.edition.message}</p>}
+                    </div>
+
+                    <div className='space-y-1 text-sm'>
+                        <label htmlFor="authenticity" className="block ">Book Category</label>
+                        <select className="select select-primary w-full max-w-xs" {...register("category", { required: true })}>
+                            <option value="bcs">BCS</option>
+                            <option value="bcs">School</option>
+                            <option value="bcs">College</option>
+                            <option value="bcs">English Medium</option>
+                            <option value="bcs">Deploma</option>
+                            <option value="bcs">University</option>
+                            <option value="bcs">MBBS</option>
+                            <option value="bcs">CA</option>
+                        </select>
+                    </div>
+                    <div className='space-y-1 text-sm'>
+                        <label htmlFor="authenticity" className="block ">Authenticity</label>
+                        <select className="select select-primary w-full max-w-xs" {...register("authenticity", { required: true })}>
+                            <option value="original">Orginal</option>
+                            <option value="copy">Copy</option>
                         </select>
                     </div>
 
                     <div className="space-y-1 text-sm">
-                        <label for="sname" className="block ">Seller Name</label>
-                        <input type="text"
-                            {...register("sname",
-                                { required: "Name is required", })}
-                            className="input input-bordered w-full max-w-xs" defaultValue={user?.displayName} />
-                        {errors.sname && <p className='text-red-500'>{errors.sname.message}</p>}
-                    </div>
-                    <div className="space-y-1 text-sm">
-                        <label for="email" className="block ">Email Address</label>
-                        <input type="email"
-                            {...register("email",
-                                { required: "Email is required" })}
-                            className="input input-bordered w-full max-w-xs " defaultValue={user?.email} readOnly />
-                        {/* {errors?.email && <p className='text-red-500'>{errors?.email.message}</p>} */}
-                    </div>
-                    <div className="space-y-1 text-sm">
-                        <label for="price" className="block ">Price</label>
+                        <label htmlFor="price" className="block ">Price</label>
                         <input type="number"
                             {...register("price",
                                 { required: "Price is required", })}
                             className="input input-bordered w-full max-w-xs" />
+
                         {errors.price && <p className='text-red-500'>{errors.price.message}</p>}
+                        <label className="label cursor-pointer w-32" >
+                            <span className="label-text">Nagotiable</span>
+                            <input className="checkbox checkbox-primary" type="checkbox" {...register("nagotiable")} />
+                        </label>
+
                     </div>
-                    <div className="space-y-1 text-sm">
-                        <label for="oriprice" className="block ">Original Price</label>
-                        <input type="number"
-                            {...register("oriprice",
-                                { required: "Price is required", })}
-                            className="input input-bordered w-full max-w-xs" />
-                        {errors.oriprice && <p className='text-red-500'>{errors.oriprice.message}</p>}
-                    </div>
+
                     <div className='space-y-1 text-sm'>
-                        <label for="condition" className="block ">Product Condition</label>
-                        <select className="select select-primary w-full max-w-xs" {...register("condition", { required: true })}>
-                            <option value="excellent" selected>Excellent</option>
-                            <option value="good">Good</option>
-                            <option value="fair">Fair</option>
+                        <label htmlFor="condition" className="block ">Product Condition</label>
+                        <select className="select select-primary w-full max-w-xs" defaultValue="Used" {...register("condition", { required: true })}>
+                            <option value="used" >Used</option>
+                            <option value="new">New</option>
                         </select>
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label for="phoneNo" className="block ">Contact Number</label>
+                        <label htmlFor="phoneNo" className="block ">Contact Number</label>
                         <input type="text"
                             {...register("phoneNo",
                                 { required: "Contact Number is required", })}
                             className="input input-bordered w-full max-w-xs" />
                         {errors.phoneNo && <p className='text-red-500'>{errors.phoneNo.message}</p>}
                     </div>
+
                     <div className="space-y-1 text-sm">
-                        <label for="location" className="block ">Location</label>
+                        <Location />
+                        {/* <label htmlFor="location" className="block ">Location</label>
                         <input type="text"
                             {...register("location",
                                 { required: "Location is required", })}
-                            className="input input-bordered w-full max-w-xs" />
+                            className="input input-bordered w-full max-w-xs" /> */}
                         {errors.location && <p className='text-red-500'>{errors.location.message}</p>}
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label for="description" className="block ">Description</label>
+                        <label htmlFor="description" className="block ">Description</label>
                         <input type="text"
                             {...register("description",
                                 { required: "Location is required", })}
                             className="input input-bordered w-full max-w-xs" />
-                        {errors.location && <p className='text-red-500'>{errors.location.message}</p>}
+                        {errors.description && <p className='text-red-500'>{errors.description.message}</p>}
+                    </div>
+
+                    <div className="space-y-1 text-sm">
+                        <label htmlFor="sname" className="block ">Seller Name</label>
+                        <input type="text"
+                            {...register("sname",
+                                { required: "Name is required", })}
+                            className="input input-bordered w-full max-w-xs" defaultValue={user?.displayName} readOnly />
+                        {errors.sname && <p className='text-red-500'>{errors.sname.message}</p>}
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label for="year" className="block ">Year Of Purchase</label>
-                        <input type="number"
-                            {...register("year",
-                                { required: "Year is required", })}
-                            className="input input-bordered w-full max-w-xs" />
-                        {errors.year && <p className='text-red-500'>{errors.year.message}</p>}
+                        <label htmlFor="email" className="block ">Email Address</label>
+                        <input type="email"
+                            {...register("email",
+                                { required: "Email is required" })}
+                            className="input input-bordered w-full max-w-xs " defaultValue={user?.email} readOnly />
+                        {/* {errors?.email && <p className='text-red-500'>{errors?.email.message}</p>} */}
                     </div>
+                    <div className="form-control w-24">
+                        <label className="label cursor-pointer">
+                            <span className="label-text">Courier</span>
+                            <input className="checkbox checkbox-primary" type="checkbox" {...register("courier")} />
+                        </label>
+                    </div>
+
                     <input className='btn btn-success w-full max-w-xs mt-4' value="Submit" type="submit" />
                 </form>
             </div>

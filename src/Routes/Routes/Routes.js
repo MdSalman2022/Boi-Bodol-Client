@@ -15,11 +15,10 @@ import AllSeller from '../../components/Pages/Dashboard/AllSellers/AllSellers';
 import AllBuyers from '../../components/Pages/Dashboard/AllBuyers/AllBuyers';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ErrorPage from '../../components/Pages/ErrorPage/ErrorPage';
-import Blog from '../../components/Pages/Blog/Blog';
 import AllReports from '../../components/Pages/Dashboard/AllReports/AllReports';
-import PaymentPage from '../../components/Pages/PaymentPage/PaymentPage';
 import SearchPage from '../../components/Pages/SearchPage/SearchPage';
 import SearchRoute from '../SearchRoute/SearchRoute';
+import Location from '../../components/Shared/Location/Location';
 
 
 export const router = createBrowserRouter([
@@ -35,10 +34,6 @@ export const router = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home></Home>
-            },
-            {
-                path: '/blog',
-                element: <Blog></Blog>
             },
             {
                 path: '/search/:name',
@@ -57,6 +52,10 @@ export const router = createBrowserRouter([
                 path: '/register',
                 element: <Register></Register>
             },
+            {
+                path: '/location',
+                element: <Location></Location>
+            },
         ]
     },
     {
@@ -69,7 +68,7 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
             },
             {
-                path: '/dashboard/myorders/',
+                path: '/dashboard/cart/',
                 element: <PrivateRoute> <MyOrders></MyOrders></PrivateRoute>
             },
             // {
@@ -104,11 +103,13 @@ export const router = createBrowserRouter([
                 path: '/dashboard/reports/',
                 element: <PrivateRoute><AllReports></AllReports></PrivateRoute>
             },
-            {
-                path: '/dashboard/payments/:id',
-                element: <PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/bookedList/${params.id}`)
-            },
+
+            // could be used as a product details page 
+            // {
+            //     path: '/dashboard/payments/:id',
+            //     element: <PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>,
+            //     loader: ({ params }) => fetch(`http://localhost:5000/bookedList/${params.id}`)
+            // },
         ]
     }
 
