@@ -5,8 +5,8 @@ const Footer = () => {
         <div className='mt-10'>
             <footer className="footer footer-center p-10 border border-1 border-[#000000] text-black-content py-32">
                 <div>
-                    <p className="text-5xl font-bold">B&S</p>
-                    <p className="font-bold">
+                    <p className="text-5xl font-semibold">B&S</p>
+                    <p className="font-semibold">
 
                     </p>
                     <p>Copyright © 2022 - All right reserved</p>

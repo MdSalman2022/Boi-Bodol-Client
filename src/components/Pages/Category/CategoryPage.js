@@ -7,17 +7,16 @@ import ProductCard from '../ProductCard/ProductCard';
 
 const CategoryPage = () => {
 
-    const items = useLoaderData()
+    const { grid } = useContext(AuthContext)
 
-    const [product, SetProduct] = useState('')
-
+    const books = useLoaderData()
 
     return (
-        <div>
-            <h1 className='text-5xl text-center font-bold'>{items[0].brand}</h1>
-            <div className='grid grid-cols-3 mt-5 justify-items-center  gap-5'>
+        <div className='mx-auto w-full max-w-max'>
+            <h1 className='text-5xl text-center font-semibold'>{books[0].category}</h1>
+            <div className='grid grid-cols-4 mt-5 justify-items-center  gap-5'>
                 {
-                    items?.map(item => <ProductCard item={item} key={item._id} product={product} SetProduct={SetProduct}></ProductCard>)
+                    books?.map(book => <ProductCard book={book} key={book._id} grid={grid}></ProductCard>)
                 }
             </div>
         </div>

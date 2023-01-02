@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
 
-const MyOrders = () => {
+const WishList = () => {
 
     const { user } = useContext(AuthContext)
     const [cart, setCart] = useState('')
@@ -17,7 +17,7 @@ const MyOrders = () => {
 
     return (
         <div>
-            <h1 className="text-3xl my-5 text-center font-bold">Cart</h1>
+            <h1 className="text-3xl my-5 text-center font-semibold">Cart</h1>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -57,4 +57,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default WishList;

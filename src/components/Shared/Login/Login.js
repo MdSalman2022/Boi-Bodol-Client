@@ -53,7 +53,7 @@ const Login = () => {
     return (
         <div className=' my-20'>
             <div className="w-96 p-8 space-y-3 rounded-xl bg-base-200 mx-auto">
-                <h1 className="text-3xl font-bold text-center">Login</h1>
+                <h1 className="text-3xl font-semibold text-center">Login</h1>
                 <form onSubmit={handleSubmit(handleLogin)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="label"><span className="label-text">Email</span></label>

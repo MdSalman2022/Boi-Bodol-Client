@@ -15,12 +15,9 @@ const Register = () => {
 
     const [createdUserEmail, setCreatedUserEmail] = useState('')
 
-    // const navigate = useNavigate()
-    // const location = useLocation()
+    const location = useLocation()
 
-
-
-    // const from = location?.state?.from.pathname || '/'
+    const from = location?.state?.from.pathname || '/'
 
     const navigate = useNavigate();
 
@@ -31,14 +28,14 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                toast.success("Successfuuly Registered")
+                toast.success("Successfully Registered")
                 const userInfo = {
                     displayName: data.name,
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        navigate('/')
                         saveUser(data.name, data.email, data.role = "user")
+                        navigate(from, { replace: true })
                     })
                     .catch(err => console.log(err))
 
@@ -64,13 +61,17 @@ const Register = () => {
                 setCreatedUserEmail(email)
             })
     }
+
     const googleSignIn = event => {
         event.preventDefault();
+
+        let role = "user";
         const Provider = new GoogleAuthProvider();
         providerLogin(Provider)
             .then(result => {
                 const user = result.user;
-                saveUser(user.displayName, user.email, user.role = "user")
+                saveUser(user.displayName, user.email, role)
+                navigate(from, { replace: true })
             })
             .catch(error => console.error(error))
     }
@@ -81,7 +82,7 @@ const Register = () => {
     return (
         <div className=' my-20'>
             <div className="w-96 p-8 space-y-3 rounded-xl bg-base-200 mx-auto">
-                <h1 className="text-3xl font-bold text-center">Register</h1>
+                <h1 className="text-3xl font-semibold text-center">Register</h1>
                 <form onSubmit={handleSubmit(handleSignUp)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label for="username" className="block ">Username</label>

@@ -2,88 +2,117 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { GoVerified } from 'react-icons/go';
 import toast from 'react-hot-toast';
+import { AiFillStar } from 'react-icons/ai';
+import { BiAddToQueue } from 'react-icons/bi';
+import { GrFavorite } from 'react-icons/gr';
+import { Link } from 'react-router-dom';
 
-const ProductCard = ({ item, product, SetProduct }) => {
+const ProductCard = ({ book, icon, grid }) => {
 
     // product details
-    const { name, img, _id, location, description, used, sname, phoneNo, price, email } = item;
+
+    const { name, img, _id, location, description, sname, phoneNo, dateAdded, price, email, upazila, district } = book;
+
+
 
     let { allUsers, user } = useContext(AuthContext)
 
 
-    const [seller, setSeller] = useState('')
-
-    // filter the seller from product in useEffect
-    useEffect(() => {
-        fetch(`http://localhost:5000/users?email=${email}`)
-            .then(res => res.json())
-            .then(data => setSeller(data))
-    }, [email])
-
-    // console.log(seller[0]?.verified)
-
-    //for filtering buyer from user list
-    allUsers = allUsers?.filter(allUser => allUser?.role === 'buyer')
-    let currentUser = allUsers?.filter(allUser => allUser?.email === user?.email)
-
-    if (email) {
-        console.log("item", item);
-    }
-    const handleSetProduct = data => {
-        SetProduct(data)
-    }
+    // const handleReportItem = data => {
+    //     const agree = window.confirm(`Do you want to report this product named ${data.name}`)
+    //     if (agree) {
+    //         fetch(`http://localhost:5000/reportedProducts/${data._id}`, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //             },
+    //         })
+    //             .then((res) => res.json())
+    //             .then((data) => {
+    //                 if (data.matchedCount > 0) {
+    //                     toast.success(`${data.name} reported successfully!`);
+    //                 }
+    //             });
+    //     }
+    // }
 
 
-    const handleReportItem = data => {
-        const agree = window.confirm(`Do you want to report this product named ${data.name}`)
-        if (agree) {
-            fetch(`http://localhost:5000/reportedProducts/${data._id}`, {
-                method: "PUT",
-                headers: {
-                    "content-type": "application/json",
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.matchedCount > 0) {
-                        toast.success(`${data.name} reported successfully!`);
-                    }
-                });
+
+    const handleBooking = data => {
+        const name = data.name
+        const sname = data.sname
+        const pId = data._id
+        const email = data.email
+        const img = data.img
+        const price = data.price
+        const location = data.upazila
+        const phoneNo = data.phoneNo
+
+        const booking = {
+            name,
+            sname,
+            img,
+            email,
+            price,
+            location,
+            phoneNo,
+            pId,
         }
+        console.log(booking);
+        fetch('http://localhost:5000/wishlist', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            // headers: {
+            //     'content-type': 'application/json',
+            //     authorization: `bearer ${localStorage.getItem('accessToken')}`
+            // },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                toast.success(`${booking.name} added to wishlist`)
+                // Navigate('/dashboard/myproducts')
+            })
+
+        console.log(booking)
+
     }
+
+    console.log(grid)
 
     return (
-        <div className="card w-96 bg-base-100 shadow-lg border-2 border-primary " key={_id}>
-            <figure><img src={img} alt="Items'" className='object-cover h-64 w-full' /></figure>
-            <div className="card-body">
-                <h2 className="card-title">{name}</h2>
-                <p>{description}</p>
-                <p className="text-sm">Location: {location}</p>
-                <p className="text-sm">Years of used: {used}</p>
-                <p className="text-sm">Posted: 2 days</p>
-                <p className="text-sm flex gap-2 inline">Seller Name: <span className='font-bold'>{sname}</span> {seller[0]?.verified ? <GoVerified className='text-sky-500 mt-1' /> : <GoVerified className='text-gray-500 mt-1' />} </p>
-                <p className="text-sm">Seller Email: <span className='font-bold'>{email}</span></p>
-                <p className="text-sm">Seller Contact: <span className='font-bold'>{phoneNo}</span></p>
-                <div className="card-actions justify-start">
-                    <p className='font-bold text-lg'>Price: {price} Tk</p>
-                </div>
-                <div className="flex justify-between">
 
-                    <div className="justify-start">
-                        <button onClick={() => handleReportItem(item)} className="btn btn-error btn-outline ">Report to Admin</button>
+        <div className={`${grid ? 'card card-compact bg-base-100 shadow-xl border-2 border-neutral rounded-lg' : 'flex flex-row w-full justify-center flex-wrap gap-5 border-2 border-neutral rounded-lg'} `} >
+            <figure className='p-2 '><img className='rounded-lg object-cover h-80' name="img" src={img} alt="Shoes" /></figure>
+            <div className="card-body py-2 relative">
+                <h2 className="card-title" name="name">{name} {icon ? icon : ''}</h2>
+                <p className='font-semibold' name="time">Posted: {
+
+                    (parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) > 24
+                        ?
+                        `${(parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) / 24} days ago`
+
+                        :
+
+                        `${(parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0)} hours ago`
+
+                }</p>
+                <p className='font-semibold' name="sname">By: {sname}</p>
+                <p className='font-semibold' name="location">Location: {upazila}, {district}</p>
+                <p className='text-left' name="description">{description}</p>
+                <p className='text-left text-xl font-semibold' name="price">Price: {price}Tk</p>
+                <div className={`card-actions  mt-3 ${grid ? 'flex  ' : 'justify-end '}`}>
+
+
+                    <div className='card-actions  mt-3 flex absolute bottom-20 right-5'>
+                        <button onClick={() => handleBooking(book)} className="btn w-14 h-14 rounded-full btn-ghost text-neutral text-3xl  p-2"><GrFavorite /></button>
                     </div>
-                    <div className="card-actions flex justify-end">
 
-                        {
-                            currentUser[0]?.role === 'buyer' ?
-                                <label onClick={() => handleSetProduct(item)} htmlFor="bookModal" className="btn btn-primary">Book Now</label>
-                                :
-                                <label className="btn btn-primary">Only For Buyers</label>
-                        }
-
-                        {/* {item &&
-                            <Modal key={_id} product={product} />
-                        } */}
+                    <div className='card-actions  mt-3 flex absolute bottom-5 right-5'>
+                        <button onClick={() => handleBooking(book)} className="btn w-14 h-14 rounded-full btn-ghost text-neutral text-3xl  p-2"><BiAddToQueue /></button>
                     </div>
                 </div>
             </div>

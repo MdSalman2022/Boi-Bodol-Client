@@ -5,27 +5,26 @@ import SearchBox from '../SearchBox/SearchBox';
 
 const SearchPage = () => {
 
-    let { searchText, setItems, items, setSearchText } = useContext(AuthContext)
+    let { searchText, setBooks, books, setSearchText } = useContext(AuthContext)
 
-    const [product, SetProduct] = useState('')
     // console.log(items);
 
 
-    console.log(items);
+    console.log(books);
 
 
     return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto max-w-6xl'>
             <SearchBox></SearchBox>
-            {items.length > 0 ?
-                <h1 className="lg:text-5xl px-4 font-bold">{searchText === "" ? "" : `You searched for "${searchText}"`}</h1>
+            {books.length > 0 ?
+                <h1 className="lg:text-5xl px-4 font-semibold">{searchText === "" ? "" : `You searched for "${searchText}"`}</h1>
                 :
-                <h1 className="lg:text-5xl px-4 font-bold">{`No result found for "${searchText}"`}</h1>
+                <h1 className="lg:text-5xl px-4 font-semibold">{`No result found for "${searchText}"`}</h1>
             }
 
             <div className='grid lg:grid-cols-3 mt-5 justify-items-center  gap-5'>
-                {items &&
-                    items.map(item => <ProductCard item={item} key={item.id} product={product} SetProduct={SetProduct}></ProductCard>)
+                {books &&
+                    books.map(book => <ProductCard book={book} key={book.id}></ProductCard>)
                 }
             </div>
 

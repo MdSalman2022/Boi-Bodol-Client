@@ -1,77 +1,35 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { GiBookshelf } from 'react-icons/gi';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+
 
 const CategoryList = () => {
 
 
-    const { data: categories = [] } = useQuery({
-        queryKey: ['categorylist'],
-        queryFn: () => fetch('http://localhost:5000/categorylist')
-            .then(res => res.json())
-    })
+    const { categories } = useContext(AuthContext)
+
+
 
     return (
         <div className=''>
             <div className="grid grid-cols-1 lg:grid-cols-5 justify-items-center  gap-5  ">
 
-                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
-                    <div className="card-body">
-                        <h2 className="card-title">Card title!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-center">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card w-64  bg-base-100 shadow-xl border border-neutral">
-                    <div className="card-body">
-                        <h2 className="card-title">Card title!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-center">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
-                    <div className="card-body">
-                        <h2 className="card-title">Card title!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-center">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card w-64  bg-base-100 shadow-xl border border-neutral">
-                    <div className="card-body">
-                        <h2 className="card-title">Card title!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-center">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card w-64 bg-base-100 shadow-xl border border-neutral">
-                    <div className="card-body">
-                        <h2 className="card-title">Card title!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-center">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                {/* {
+                {
                     categories &&
                     categories?.map(category =>
-                        <div key={category.categoryId} className=''>
-                            <div className="max-w-xs rounded-3xl bg-transparent ">
-                                <img src={category.img} alt="" className="rounded-2xl p-2 object-contain object-fit w-64 rounded-t-md h-32  bg-transparent" />
+                        <div key={category._id} className="card w-64 bg-base-100 shadow-xl border border-neutral">
+                            <div className="card-body flex justify-center items-center">
+                                <h2 className="card-title text-5xl"><GiBookshelf /></h2>
+                                <div className="card-actions justify-center">
+                                    <Link to={`/category/${category.category}`}><button type="button" className="mt-5 btn btn-outline btn-neutral font-semibold tracking-wide ">{category.category}</button></Link>
+                                </div>
                             </div>
-                            <Link to={`/category/${category.categoryId}`}><button type="button" className="hover:bg-secondary transition-colors hover:text-white mt-5 flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md btn-primary">{category.name}</button></Link>
-                        </div>)
-                } */}
+                        </div>
+                    )
+                }
 
             </div>
 

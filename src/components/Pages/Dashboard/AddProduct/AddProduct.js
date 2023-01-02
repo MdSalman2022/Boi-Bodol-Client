@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
 import Location from '../../../Shared/Location/Location';
 
@@ -9,15 +9,80 @@ const AddProduct = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const { user } = useContext(AuthContext)
+    const { user, categories } = useContext(AuthContext)
+
+    console.log(categories);
+
+
+    const initialState = {
+        division: "",
+        district: "",
+        upazila: ""
+    }
+
+    const reducer = (state, action) => {
+        console.log(action)
+        switch (action.type) {
+            case "INPUT":
+                return {
+                    ...state,
+                    [action.payload.name]: action.payload.value
+                };
+            default:
+                return state;
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+
+    let [divisions, setDivisions] = useState([])
 
 
 
+    useEffect(() => {
+        fetch(`http://localhost:5000/divisions`)
+            .then(res => res.json())
+            .then(data => setDivisions(data))
+            .catch(err => console.log(err))
+    }, [])
 
+    let [districts, setDistricts] = useState([])
+
+
+    useEffect(() => {
+        divisions &&
+            fetch(`http://localhost:5000/districts/${state?.division}`)
+                .then(res => res.json())
+                .then(data => setDistricts(data))
+                .catch(err => console.log(err))
+    }, [state?.division])
+
+    let [upazilas, setUpazilas] = useState([])
+
+    useEffect(() => {
+        districts &&
+            fetch(`http://localhost:5000/upazilas/${state?.district}`)
+                .then(res => res.json())
+                .then(data => setUpazilas(data))
+                .catch(err => console.log(err))
+    }, [state?.district])
+
+    const [division, setDivision] = useState('')
+    const [district, setDistrict] = useState('')
+    const [upazila, setUpazila] = useState('')
+
+
+    const navigate = useNavigate();
 
     const imageHostKey = process.env.REACT_APP_imgbb_key;
 
     const handleProductSubmit = data => {
+
+        divisions = divisions.filter(division => division.division_id === state.division)
+
+        districts = districts.filter(district => district.district_id === state.district)
+
 
 
         const image = data.image[0]
@@ -34,42 +99,52 @@ const AddProduct = () => {
                     const product = {
                         name: data.name,
                         sname: data.sname,
-                        price: data.price,
+                        price: parseInt(data.price),
                         condition: data.condition,
+                        category: data.category,
                         publication: data.publication,
                         edition: data.edition,
                         authenticity: data.authenticity,
                         nagotiable: data.nagotiable,
                         courier: data.courier,
                         phoneNo: data.phoneNo,
-                        location: data.location,
                         description: data.description,
                         email: data.email,
                         img: imgUpload.data.url,
                         sold: false,
-                        available: true,
                         trending: false,
                         featured: false,
                         urgent: false,
+                        division: divisions[0]?.division,
+                        district: districts[0]?.District,
+                        upazila: state.upazila,
+                        dateAdded: new Date(),
+                        date: new Date().toLocaleString(),
+                        // minute: new Date().getMinutes(),
+                        // hour: new Date().getHours(),
+                        // day: new Date().getDate(),
+                        // month: new Date().getMonth() + 1,
+                        // year: new Date().getFullYear(),
+
                     }
                     console.log(product);
-                    // fetch('http://localhost:5000/categoryitems', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'content-type': 'application/json'
-                    //     },
-                    //     // headers: {
-                    //     //     'content-type': 'application/json',
-                    //     //     authorization: `bearer ${localStorage.getItem('accessToken')}`
-                    //     // },
-                    //     body: JSON.stringify(product)
-                    // })
-                    //     .then(res => res.json())
-                    //     .then(result => {
-                    //         toast.success(`${product.name} is added successfully`)
-                    //         Navigate('/dashboard/myproducts')
-                    //     }
-                    //     )
+                    fetch('http://localhost:5000/books', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        // headers: {
+                        //     'content-type': 'application/json',
+                        //     authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        // },
+                        body: JSON.stringify(product)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            toast.success(`${product.name} is added successfully`)
+                            navigate('/dashboard/myproducts')
+                        }
+                        )
                 }
             })
 
@@ -80,9 +155,9 @@ const AddProduct = () => {
 
 
     return (
-        <div className=' my-10   scrollbar-hide'>
+        <div className='mt-5 scrollbar-hide'>
             <div className="p-8 space-y-3 rounded-xl bg-base-200 mx-auto ">
-                <h1 className="text-3xl font-bold text-center">Add A Product</h1>
+                <h1 className="text-3xl font-semibold text-center">Add A Product</h1>
                 <form onSubmit={handleSubmit(handleProductSubmit)} noValidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid grid grid-cols-2   scrollbar-hide">
 
                     <div className="space-y-1 text-sm mt-5">
@@ -124,14 +199,9 @@ const AddProduct = () => {
                     <div className='space-y-1 text-sm'>
                         <label htmlFor="authenticity" className="block ">Book Category</label>
                         <select className="select select-primary w-full max-w-xs" {...register("category", { required: true })}>
-                            <option value="bcs">BCS</option>
-                            <option value="bcs">School</option>
-                            <option value="bcs">College</option>
-                            <option value="bcs">English Medium</option>
-                            <option value="bcs">Deploma</option>
-                            <option value="bcs">University</option>
-                            <option value="bcs">MBBS</option>
-                            <option value="bcs">CA</option>
+                            {
+                                categories.map(category => <option value={category.category} key={category._id}>{category.category}</option>)
+                            }
                         </select>
                     </div>
                     <div className='space-y-1 text-sm'>
@@ -174,13 +244,34 @@ const AddProduct = () => {
                     </div>
 
                     <div className="space-y-1 text-sm">
-                        <Location />
-                        {/* <label htmlFor="location" className="block ">Location</label>
-                        <input type="text"
-                            {...register("location",
-                                { required: "Location is required", })}
-                            className="input input-bordered w-full max-w-xs" /> */}
-                        {errors.location && <p className='text-red-500'>{errors.location.message}</p>}
+
+                        <label htmlFor="division" className={`block ${state.division ? "hidden" : ''}`}>Division</label>
+                        <select defaultValue={""} className={`select select-primary w-auto max-w-xs ${state.division ? "hidden" : ''}`} name="division" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
+                            <option disabled hidden value="">Select a Division</option>
+                            {divisions &&
+                                divisions?.map(division => <option key={division.division_id} value={division.division_id}>{division.division}</option>)
+                            }
+                        </select>
+
+
+                        <label htmlFor="districts" className={`block ${!state.division || state.district ? "hidden" : ''}`}>Districts</label>
+                        <select defaultValue={""} className={`select select-primary w-auto max-w-xs ${!state.division || state.district ? "hidden" : ''}`} name="district" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
+                            <option disabled hidden value="">Select a District</option>
+                            {districts &&
+                                districts?.map(district => <option key={district._id} value={district.district_id}>{district.District}</option>)
+                            }
+                        </select>
+
+
+                        <label htmlFor="upazila" className={`block ${!state.district ? "hidden" : ''}`}>Upazila</label>
+                        <select defaultValue={""} className={`select select-primary w-auto max-w-xs ${!state.district ? "hidden" : ''}`} name="upazila"
+                            onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
+                            <option disabled hidden value="">Select a Upazila</option>
+
+                            {upazilas &&
+                                upazilas?.map(upazila => <option key={upazila._id} value={upazila.Upazilla}>{upazila.Upazilla}</option>)
+                            }
+                        </select>
                     </div>
                     <div className="space-y-1 text-sm">
                         <label htmlFor="description" className="block ">Description</label>
@@ -214,7 +305,7 @@ const AddProduct = () => {
                         </label>
                     </div>
 
-                    <input className='btn btn-success w-full max-w-xs mt-4' value="Submit" type="submit" />
+                    <input className='btn btn-neutral  text-white w-full max-w-xs mt-4' value="Submit" type="submit" />
                 </form>
             </div>
         </div>

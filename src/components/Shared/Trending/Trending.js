@@ -1,43 +1,40 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AiFillStar } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import ProductCard from '../../Pages/ProductCard/ProductCard';
+
 
 const Trending = () => {
+
+    let [books, setBooks] = useState([])
+
+    let { grid } = useContext(AuthContext)
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/products`)
+            .then(res => res.json())
+            .then(data => setBooks(data))
+    }, [])
+
+
+    console.log(books);
+
+    books = books?.filter(book => book.trending === true)
+
+
     return (
-        <div className='text-center'>
-            <div className='grid grid-cols-3 mx-auto  justify-items-center '>
-                <div className="card card-compact w-96 bg-base-100 shadow-xl border border-primary">
-                    <figure className='p-2 '><img className='rounded-lg shadow-md ' src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h2 className="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card card-compact w-96 bg-base-100 shadow-xl border border-primary">
-                    <figure className='p-2 '><img className='rounded-lg shadow-md ' src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h2 className="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card card-compact w-96 bg-base-100 shadow-xl border border-primary">
-                    <figure className='p-2 '><img className='rounded-lg shadow-md ' src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h2 className="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-neutral text-secondary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
+        <div className=''>
+
+            <div className='grid lg:grid-cols-4 mx-auto  justify-items-center '>
+                {books &&
+                    books.map(book => <ProductCard book={book} icon={<AiFillStar className='text-yellow-400' />} key={book._id} grid={grid}></ProductCard>)
+                }
 
             </div>
-            <button className="btn btn-outline btn-neutral hover:bg-neutral my-10">See More</button>
-
+            <div className='flex justify-center items-center'>
+                <Link to="/allads"><button className="btn btn-outline btn-neutral hover:bg-neutral my-10">See More</button></Link>
+            </div>
         </div>
     );
 };

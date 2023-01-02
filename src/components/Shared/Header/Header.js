@@ -41,7 +41,7 @@ const Header = () => {
                                             <img src={user.photoURL} />
                                         </div>
                                     </div>
-                                    <p className='font-bold mr-2'>{user?.displayName}</p>
+                                    <p className='font-semibold mr-2'>{user?.displayName}</p>
                                     <Link onClick={handleLogOut} className="btn btn-neutral mr-2">Logout</Link>
                                 </div>
                                 :
@@ -53,7 +53,9 @@ const Header = () => {
                         }
                     </ul>
                 </div>
-                <Link to='/' className=" normal-case text-3xl text-neutral font-bold underline decoration-primary">BoiBodol</Link>
+                <Link to='/' className=" normal-case text-3xl text-neutral font-semibold underline decoration-primary">
+                    <img src="https://i.ibb.co/MPqdr3W/logo.png" className='w-32' alt="logo" border="0"></img>
+                </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0 text-secondary">
@@ -70,7 +72,7 @@ const Header = () => {
                                 <img src={user.photoURL} />
                             </div>
                         </div>
-                        <p className='font-bold mr-2'>{user?.displayName}</p>
+                        <p className='font-semibold mr-2'>{user?.displayName}</p>
                         <Link onClick={handleLogOut} className="btn btn-neutral mr-2">Logout</Link>
                     </div>
                     :

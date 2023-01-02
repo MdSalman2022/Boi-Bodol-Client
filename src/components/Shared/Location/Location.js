@@ -93,17 +93,7 @@ const Location = () => {
             <form onSubmit={handleLocation}>
 
                 <label htmlFor="division" className={`block ${state.division ? "hidden" : ''}`}>Division</label>
-                <select className={`select select-primary w-auto max-w-xs ${state.division ? "hidden" : ''}`} name="division"
-                    onChange={async (e) =>
-
-                        await dispatch({
-                            type: "INPUT",
-                            payload: { name: e.target.name, value: e.target.value },
-                        })
-                    }
-                    required
-
-                >
+                <select className={`select select-primary w-auto max-w-xs ${state.division ? "hidden" : ''}`} name="division" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
                     {divisions &&
                         divisions?.map(division => <option key={division.division_id} value={division.division_id}>{division.division}</option>)
@@ -112,17 +102,7 @@ const Location = () => {
 
 
                 <label htmlFor="districts" className={`block ${!state.division || state.district ? "hidden" : ''}`}>Districts</label>
-                <select className={`select select-primary w-auto max-w-xs ${!state.division || state.district ? "hidden" : ''}`} name="district"
-                    onChange={async (e) =>
-
-                        await dispatch({
-                            type: "INPUT",
-                            payload: { name: e.target.name, value: e.target.value },
-                        })
-                    }
-                    required
-
-                >
+                <select className={`select select-primary w-auto max-w-xs ${!state.division || state.district ? "hidden" : ''}`} name="district" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
                     {districts &&
                         districts?.map(district => <option key={district._id} value={district.district_id}>{district.District}</option>)
@@ -132,15 +112,7 @@ const Location = () => {
 
                 <label htmlFor="upazila" className={`block ${!state.district ? "hidden" : ''}`}>Upazila</label>
                 <select className={`select select-primary w-auto max-w-xs ${!state.district ? "hidden" : ''}`} name="upazila"
-                    onChange={async (e) =>
-
-                        await dispatch({
-                            type: "INPUT",
-                            payload: { name: e.target.name, value: e.target.value },
-                        })
-                    }
-                    required
-                >
+                    onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
 
                     {upazilas &&

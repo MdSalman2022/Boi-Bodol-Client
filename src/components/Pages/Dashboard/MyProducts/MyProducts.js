@@ -6,25 +6,22 @@ const MyProducts = () => {
 
     const { user } = useContext(AuthContext)
     const [myProducts, setMyProducts] = useState('')
-    const [allPaidProducts, setAllPaidProducts] = useState('')
+
+
+    const [id, setId] = useState('')
+
 
 
     useEffect(() => {
         fetch(`http://localhost:5000/myproducts?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setMyProducts(data))
-    }, [user?.email])
+    }, [user?.email, id])
 
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/payments`)
-            .then(res => res.json())
-            .then(data => setAllPaidProducts(data))
-    }, [])
 
-    console.log(allPaidProducts);
 
-    const handleAdvertise = id => {
+    const handleAvailable = id => {
         fetch(`http://localhost:5000/myproducts/${id}`, {
             method: 'PUT',
             headers: {
@@ -34,27 +31,14 @@ const MyProducts = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    toast.success('Product Marked as Sold successful.')
+                    console.log(data)
+                    setId(id)
                 }
             })
     }
 
 
 
-    // const handleAvailable = id => {
-    //     fetch(`http://localhost:5000/available/${id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.modifiedCount > 0) {
-    //                 toast('Product Is Not Available')
-    //             }
-    //         })
-    // }
 
 
     const handleDelete = data => {
@@ -79,7 +63,7 @@ const MyProducts = () => {
 
     return (
         <div>
-            <h1 className="text-3xl my-5 text-center font-bold">My Products</h1>
+            <h1 className="text-3xl my-5 text-center font-semibold">My Products</h1>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -96,20 +80,19 @@ const MyProducts = () => {
                     <tbody>
                         {myProducts &&
                             myProducts.map((myProduct, index) =>
-                                <tr>
+                                <tr key={myProduct._id}>
                                     <th>{index + 1}</th>
                                     <td>{myProduct.name}</td>
                                     <td>{myProduct.price}</td>
                                     <td>{myProduct.email}</td>
-                                    <td>{myProduct.Available ? 'Available' : "Sold"}</td>
+                                    <td>{myProduct.sold ? 'Sold' : "Available"}</td>
                                     <td>
-                                        <button onClick={() => handleAdvertise(myProduct._id)} className="btn btn-success mr-2">{myProduct.Advertise ? 'Advertised' : 'Advertise'}</button>
+                                        <button disabled={myProduct.sold} onClick={() => handleAvailable(myProduct._id)} className="btn btn-success mr-2">Sold</button>
 
                                         <button onClick={() => handleDelete(myProduct)} className="btn btn-outline btn-error">Delete</button>
                                     </td>
                                 </tr>
                             )
-
                         }
                     </tbody>
                 </table>
