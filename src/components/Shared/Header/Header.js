@@ -55,7 +55,7 @@ const Header = () => {
                     </ul>
                 </div>
                 <Link to='/' className=" normal-case text-3xl text-neutral font-semibold underline decoration-primary">
-                    <LazyLoadImage src="https://i.ibb.co/MPqdr3W/logo.png" className='w-32' alt="logo" border="0" />
+                    <LazyLoadImage src="https://i.ibb.co/NsGx83q/logoboi.png" className='w-32' alt="logo" border="0" />
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">

@@ -43,10 +43,8 @@ function SearchBox() {
 
             <div className="hero-content flex-col lg:flex-row-reverse lg:gap-96 mx-auto text-center">
                 <div>
-                    <h1 className="text-5xl font-semibold text-center flex justify-center ">
-
-                        <LazyLoadImage src="https://i.ibb.co/MPqdr3W/logo.png" className='w-32' alt="logo" border="0" />
-
+                    <h1 className="font-semibold text-center flex justify-center ">
+                        <LazyLoadImage src="https://i.ibb.co/NsGx83q/logoboi.png" className='w-44' alt="logo" border="0" />
                     </h1>
                     <p className="py-6 font-semibold">We will help you to get the best deal possible in our marketplace.</p>
                     <div className='max-w-md mx-auto'>
