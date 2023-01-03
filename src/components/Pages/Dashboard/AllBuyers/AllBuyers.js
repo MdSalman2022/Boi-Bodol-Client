@@ -13,7 +13,7 @@ const AllBuyers = () => {
         const permission = window.confirm(`Are you sure you want to delete: ${data.name}`)
 
         if (permission) {
-            fetch(`http://localhost:5000/users/${data._id}`, {
+            fetch(`${process.env.REACT_APP_SERVER_LINK}/users/${data._id} `, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

@@ -13,16 +13,16 @@ const MyProducts = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/myproducts?email=${user?.email}`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/myproducts?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setMyProducts(data))
-    }, [user?.email, id])
+    }, [user?.email, id, myProducts])
 
 
 
 
     const handleAvailable = id => {
-        fetch(`http://localhost:5000/myproducts/${id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/myproducts/${id} `, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -42,10 +42,10 @@ const MyProducts = () => {
 
 
     const handleDelete = data => {
-        const permission = window.confirm(`Are you sure you want to delete: ${data.name}`)
+        const permission = window.confirm(`Are you sure you want to delete: ${data.name} `)
 
         if (permission) {
-            fetch(`http://localhost:5000/products/${data._id}`, {
+            fetch(`${process.env.REACT_APP_SERVER_LINK}/products/${data._id} `, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

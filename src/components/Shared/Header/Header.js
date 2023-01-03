@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
@@ -6,13 +7,13 @@ const Header = () => {
 
     const { user, logOut } = useContext(AuthContext)
 
-    const [role, setRole] = useState('')
+    // const [role, setRole] = useState('')
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/users?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setRole(data[0]?.role))
-    }, [user?.email])
+    // useEffect(() => {
+    //     fetch(`${process.env.REACT_APP_SERVER_LINK}/users?email=${user?.email}`)
+    //         .then(res => res.json())
+    //         .then(data => setRole(data[0]?.role))
+    // }, [user?.email])
 
 
     const handleLogOut = () => {
@@ -38,7 +39,7 @@ const Header = () => {
                                 <div className="navbar-end">
                                     <div className="avatar mr-2">
                                         <div className="w-12 rounded-full">
-                                            <img src={user.photoURL} />
+                                            <LazyLoadImage src={user.photoURL} width={100} />
                                         </div>
                                     </div>
                                     <p className='font-semibold mr-2'>{user?.displayName}</p>
@@ -54,26 +55,33 @@ const Header = () => {
                     </ul>
                 </div>
                 <Link to='/' className=" normal-case text-3xl text-neutral font-semibold underline decoration-primary">
-                    <img src="https://i.ibb.co/MPqdr3W/logo.png" className='w-32' alt="logo" border="0"></img>
+                    <LazyLoadImage src="https://i.ibb.co/MPqdr3W/logo.png" className='w-32' alt="logo" border="0" />
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0 text-secondary">
                     <li><Link className="rounded-xl mr-2 text-neutral focus:text-white " to='/home'>Home</Link></li>
                     <li><Link className="rounded-xl mr-2 text-neutral focus:text-white " to='/allads'>All Ads</Link></li>
-                    {user && <li><Link className="rounded-xl text-neutral focus:text-white " to='/dashboard'>My Account</Link></li>}
                 </ul>
             </div>
             {
                 user?.uid ?
                     <div className="navbar-end hidden mg:flex lg:flex">
-                        <div className="avatar mr-2">
-                            <div className="w-12 rounded-full">
-                                <img src={user.photoURL} />
-                            </div>
+
+                        <div className="dropdown dropdown-end space-y-3">
+                            <label tabIndex={0} className="">
+                                <div className="avatar mr-2">
+                                    <div className="w-12 rounded-full">
+                                        <LazyLoadImage src={user.photoURL} />
+                                    </div>
+                                </div>
+                            </label>
+                            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-secondary rounded-box w-52">
+                                <li><Link className="rounded-xl text-neutral focus:text-white " to='/dashboard'>My Account</Link></li>
+                                <li><a onClick={handleLogOut}>Logout</a></li>
+                            </ul>
                         </div>
-                        <p className='font-semibold mr-2'>{user?.displayName}</p>
-                        <Link onClick={handleLogOut} className="btn btn-neutral mr-2">Logout</Link>
+                        {/* <Link onClick={handleLogOut} className="btn btn-neutral mr-2">Logout</Link> */}
                     </div>
                     :
                     <div className="navbar-end hidden md:flex lg:flex">

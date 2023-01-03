@@ -1,7 +1,7 @@
 
 ## `Site Name` BUYANDSELL24 - This site is about used product Buy sell.
 Site link: Open [https://buysell-a13b9.web.app/](https://buysell-a13b9.web.app/) to view it in your browser.
-Server link: [http://localhost:5000](http://localhost:5000) to view it in your browser.
+Server link: [${process.env.REACT_APP_SERVER_LINK}](${process.env.REACT_APP_SERVER_LINK}) to view it in your browser.
 
 
 ## `Admin Info`

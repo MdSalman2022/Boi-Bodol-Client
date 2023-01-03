@@ -11,7 +11,7 @@ const DashboardLayout = () => {
     const [role, setRole] = useState('')
 
     useEffect(() => {
-        fetch(`http://localhost:5000/users?email=${user?.email}`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/users?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setRole(data[0]?.role))
     }, [user?.email])
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
     }
     else
         return (
-            <div className='  '>
+            <div className='my-5'>
 
                 <Header></Header>
                 <div className="drawer drawer-mobile container mx-auto ">
@@ -39,10 +39,10 @@ const DashboardLayout = () => {
                             {
                                 role === 'user' ?
                                     <>
-                                        <li><Link to='/dashboard/wishlist'>My Wishlist</Link></li>
-                                        <li><Link to='/dashboard/addproduct'>Add Product</Link></li>
-                                        <li><Link to='/dashboard/myproducts'>My Products</Link></li>
-                                        <li><Link to='/dashboard/mycontacts'>My Contacts</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/wishlist'>My Wishlist</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/addproduct'>Add Product</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/myproducts'>My Products</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/mycontacts'>My Contacts</Link></li>
                                     </>
                                     :
                                     ''
@@ -50,9 +50,9 @@ const DashboardLayout = () => {
                             {
                                 role === 'admin' ?
                                     <>
-                                        <li><Link to='/dashboard/allsellers'>All Sellers</Link></li>
-                                        <li><Link to='/dashboard/allbuyers'>All Buyers</Link></li>
-                                        <li><Link to='/dashboard/reports'>Reported Items</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/allsellers'>All Sellers</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/allbuyers'>All Buyers</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/reports'>Reported Items</Link></li>
                                     </>
                                     :
                                     ''

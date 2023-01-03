@@ -48,7 +48,7 @@ const Register = () => {
 
     const saveUser = (name, email, role) => {
         const user = { name, email, role }
-        fetch('http://localhost:5000/users', {
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/users`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -113,8 +113,7 @@ const Register = () => {
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
 
-
-                    <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" />
+                    <input className='btn btn-primary hover:btn-neutral w-full' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
 
                 </form>

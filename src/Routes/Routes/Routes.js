@@ -21,6 +21,7 @@ import SearchRoute from '../SearchRoute/SearchRoute';
 import Location from '../../components/Shared/Location/Location';
 import AllBooks from '../../components/Shared/AllBooks/AllBooks';
 import AllAds from '../../components/Pages/AllAds/AllAds';
+import CardDetail from '../../components/Shared/CardDetail/CardDetail';
 
 
 export const router = createBrowserRouter([
@@ -42,9 +43,14 @@ export const router = createBrowserRouter([
                 element: <SearchRoute><SearchPage></SearchPage></SearchRoute>
             },
             {
-                path: '/category/:category',
-                loader: ({ params }) => fetch(`http://localhost:5000/products/${params.category}`),
-                element: <PrivateRoute><CategoryPage></CategoryPage></PrivateRoute>
+                path: '/category/:id',
+                loader: ({ params }) => fetch(`${process.env.REACT_APP_SERVER_LINK}/category/${params.id}`),
+                element: <CategoryPage></CategoryPage>
+            },
+            {
+                path: '/details/:id',
+                loader: ({ params }) => fetch(`${process.env.REACT_APP_SERVER_LINK}/products/${params.id}`),
+                element: <CardDetail></CardDetail>
             },
             {
                 path: '/login',
@@ -56,7 +62,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/homebooks',
-                loader: () => fetch('http://localhost:5000/homebooks'),
+                loader: () => fetch(`${process.env.REACT_APP_SERVER_LINK}/homebooks`),
                 element: <AllBooks></AllBooks>
             },
             {
@@ -78,10 +84,6 @@ export const router = createBrowserRouter([
                 path: '/dashboard/wishlist',
                 element: <WishList></WishList>
             },
-            // {
-            //     path: '/dashboard/wishlist/',
-            //     element: <PrivateRoute><MyOrders></MyOrders></PrivateRoute>
-            // },
             {
                 path: '/dashboard/addproduct/',
                 element: <AddProduct></AddProduct>
@@ -110,13 +112,6 @@ export const router = createBrowserRouter([
                 path: '/dashboard/reports/',
                 element: <AllReports></AllReports>
             },
-
-            // could be used as a product details page 
-            // {
-            //     path: '/dashboard/payments/:id',
-            //     element: <PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>,
-            //     loader: ({ params }) => fetch(`http://localhost:5000/bookedList/${params.id}`)
-            // },
         ]
     }
 

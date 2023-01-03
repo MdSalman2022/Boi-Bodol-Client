@@ -34,7 +34,7 @@ const Location = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/divisions`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/divisions`)
             .then(res => res.json())
             .then(data => setDivisions(data))
     }, [])
@@ -42,7 +42,7 @@ const Location = () => {
     let [districts, setDistricts] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/districts/${state.division}`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/districts/${state.division}`)
             .then(res => res.json())
             .then(data => setDistricts(data))
     }, [state.division])
@@ -50,7 +50,7 @@ const Location = () => {
     let [upazilas, setUpazilas] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/upazilas/${state.district}`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/upazilas/${state.district}`)
             .then(res => res.json())
             .then(data => setUpazilas(data))
     }, [state.district])
@@ -93,7 +93,7 @@ const Location = () => {
             <form onSubmit={handleLocation}>
 
                 <label htmlFor="division" className={`block ${state.division ? "hidden" : ''}`}>Division</label>
-                <select className={`select select-primary w-auto max-w-xs ${state.division ? "hidden" : ''}`} name="division" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
+                <select className={`select select - primary w - auto max - w - xs ${state.division ? "hidden" : ''}`} name="division" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
                     {divisions &&
                         divisions?.map(division => <option key={division.division_id} value={division.division_id}>{division.division}</option>)
@@ -102,7 +102,7 @@ const Location = () => {
 
 
                 <label htmlFor="districts" className={`block ${!state.division || state.district ? "hidden" : ''}`}>Districts</label>
-                <select className={`select select-primary w-auto max-w-xs ${!state.division || state.district ? "hidden" : ''}`} name="district" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
+                <select className={`select select - primary w - auto max - w - xs ${!state.division || state.district ? "hidden" : ''} `} name="district" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
                     {districts &&
                         districts?.map(district => <option key={district._id} value={district.district_id}>{district.District}</option>)
@@ -110,8 +110,8 @@ const Location = () => {
                 </select>
 
 
-                <label htmlFor="upazila" className={`block ${!state.district ? "hidden" : ''}`}>Upazila</label>
-                <select className={`select select-primary w-auto max-w-xs ${!state.district ? "hidden" : ''}`} name="upazila"
+                <label htmlFor="upazila" className={`block ${!state.district ? "hidden" : ''} `}>Upazila</label>
+                <select className={`select select - primary w - auto max - w - xs ${!state.district ? "hidden" : ''} `} name="upazila"
                     onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
                     <option disabled selected hidden value="">Select an Option</option>
 

@@ -8,12 +8,6 @@ import Testimonial from './Testimonial';
 
 const Home = () => {
 
-    const olddate = new Date()
-    olddate.toString();
-    console.log(olddate);
-    console.log(typeof olddate)
-    const date = new Date().toLocaleDateString()
-    console.log(date)
 
     return (
         <div className="container mx-auto ">

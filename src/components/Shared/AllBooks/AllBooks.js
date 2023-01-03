@@ -10,7 +10,7 @@ const AllBooks = () => {
     let { grid } = useContext(AuthContext)
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/products')
+    //     fetch('${process.env.REACT_APP_SERVER_LINK}/products')
     //         .then(res => res.json())
     //         .then(data => setBooks(data))
     // }, [])
@@ -20,17 +20,16 @@ const AllBooks = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/homebooks`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/homebooks`)
             .then(res => res.json())
             .then(data => setBooks(data))
     }, [])
 
 
-    console.log(books);
 
     return (
         <div className=''>
-            <div className='grid lg:grid-cols-4 mx-auto  justify-items-center '>
+            <div className='grid lg:grid-cols-4 gap-5 mx-auto  justify-items-center '>
                 {books &&
                     books.map(book => <ProductCard book={book} key={book._id} grid={grid}></ProductCard>)
                 }

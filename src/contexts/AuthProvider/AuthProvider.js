@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/users`)
             .then(res => res.json())
             .then(data => setAllUsers(data))
     }, [])
@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/search?name=${searchText}`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/search?name=${searchText}`)
             .then(res => res.json())
             .then(data => setBooks(data))
     }, [searchText])
@@ -39,8 +39,8 @@ const AuthProvider = ({ children }) => {
 
 
     const { data: categories = [] } = useQuery({
-        queryKey: ['categorylist'],
-        queryFn: () => fetch('http://localhost:5000/categorylist')
+        queryKey: ['catagories'],
+        queryFn: () => fetch(`${process.env.REACT_APP_SERVER_LINK}/catagories`)
             .then(res => res.json())
     })
 

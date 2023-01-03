@@ -27,11 +27,10 @@ const Login = () => {
         setLoginError('')
         signIn(data.email, data.password)
             .then(result => {
-
-                navigate('/')
                 const user = result.user
                 console.log(user)
                 setLoginUserEmail(data.email)
+                navigate(from, { replace: true })
             })
             .catch(error => {
                 console.log(error.message)
@@ -46,6 +45,7 @@ const Login = () => {
         providerLogin(Provider)
             .then(result => {
                 const user = result.user;
+                navigate(from, { replace: true })
             })
             .catch(error => console.error(error))
     }
@@ -74,7 +74,7 @@ const Login = () => {
                             className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-accent w-full' value="Login" type="submit" />
+                    <input className='btn btn-primary hover:btn-neutral w-full' value="Login" type="submit" />
                     <div>
                         {
                             loginError && <p className='text-red-500'>{loginError}</p>
@@ -94,8 +94,8 @@ const Login = () => {
                     </button>
 
                 </div>
-                <p className="text-xs text-center sm:px-6 ">Don't have an account?
-                    <Link to='/register' rel="noopener noreferrer" href="#" className="underline">Sign up</Link>
+                <p className="text-sm text-center sm:px-6 ">Don't have an account?
+                    <Link to='/register' rel="noopener noreferrer" href="#" className="underline font-bold">Sign up</Link>
                 </p>
             </div>
         </div>

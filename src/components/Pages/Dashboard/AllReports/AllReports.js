@@ -7,14 +7,14 @@ const AllReports = () => {
     const [reports, setReport] = useState('')
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reportedProducts/`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/`)
             .then(res => res.json())
             .then(data => setReport(data))
     }, [])
 
 
     const handleDelete = data => {
-        fetch(`http://localhost:5000/reportedProducts/${data?._id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/${data?._id} `, {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",

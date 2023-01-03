@@ -41,7 +41,7 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/divisions`)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/divisions`)
             .then(res => res.json())
             .then(data => setDivisions(data))
             .catch(err => console.log(err))
@@ -52,7 +52,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         divisions &&
-            fetch(`http://localhost:5000/districts/${state?.division}`)
+            fetch(`${process.env.REACT_APP_SERVER_LINK}/districts/${state?.division}`)
                 .then(res => res.json())
                 .then(data => setDistricts(data))
                 .catch(err => console.log(err))
@@ -62,7 +62,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         districts &&
-            fetch(`http://localhost:5000/upazilas/${state?.district}`)
+            fetch(`${process.env.REACT_APP_SERVER_LINK}/upazilas/${state?.district}`)
                 .then(res => res.json())
                 .then(data => setUpazilas(data))
                 .catch(err => console.log(err))
@@ -128,7 +128,7 @@ const AddProduct = () => {
 
                     }
                     console.log(product);
-                    fetch('http://localhost:5000/books', {
+                    fetch(`${process.env.REACT_APP_SERVER_LINK}/books`, {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'
@@ -155,12 +155,12 @@ const AddProduct = () => {
 
 
     return (
-        <div className='mt-5 scrollbar-hide'>
+        <div className=' scrollbar-hide'>
             <div className="p-8 space-y-3 rounded-xl bg-base-200 mx-auto ">
                 <h1 className="text-3xl font-semibold text-center">Add A Product</h1>
                 <form onSubmit={handleSubmit(handleProductSubmit)} noValidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid grid grid-cols-2   scrollbar-hide">
 
-                    <div className="space-y-1 text-sm mt-5">
+                    <div className=" text-sm mt-5">
                         <label htmlFor="name" className="block ">Book Name</label>
                         <input type="text"
                             {...register("name",
@@ -169,7 +169,7 @@ const AddProduct = () => {
                         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
                     </div>
 
-                    <div className='space-y-1 text-sm mt-5'>
+                    <div className=' text-sm mt-5'>
                         <label htmlFor="images" className="block label-text">Book Images</label>
 
                         <input type="file"
@@ -180,7 +180,7 @@ const AddProduct = () => {
                     </div>
 
 
-                    <div className='space-y-1 text-sm'>
+                    <div className=' text-sm'>
                         <label htmlFor="publication" className="block ">Book Publication</label>
                         <input type="text"
                             {...register("publication")}
@@ -188,7 +188,7 @@ const AddProduct = () => {
                         {errors.publication && <p className='text-red-500'>{errors.publication.message}</p>}
 
                     </div>
-                    <div className='space-y-1 text-sm'>
+                    <div className=' text-sm'>
                         <label htmlFor="edition" className="block ">Book Edition</label>
                         <input type="text"
                             {...register("edition")}
@@ -196,7 +196,7 @@ const AddProduct = () => {
                         {errors.edition && <p className='text-red-500'>{errors.edition.message}</p>}
                     </div>
 
-                    <div className='space-y-1 text-sm'>
+                    <div className=' text-sm'>
                         <label htmlFor="authenticity" className="block ">Book Category</label>
                         <select className="select select-primary w-full max-w-xs" {...register("category", { required: true })}>
                             {
@@ -204,7 +204,7 @@ const AddProduct = () => {
                             }
                         </select>
                     </div>
-                    <div className='space-y-1 text-sm'>
+                    <div className=' text-sm'>
                         <label htmlFor="authenticity" className="block ">Authenticity</label>
                         <select className="select select-primary w-full max-w-xs" {...register("authenticity", { required: true })}>
                             <option value="original">Orginal</option>
@@ -212,7 +212,7 @@ const AddProduct = () => {
                         </select>
                     </div>
 
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
                         <label htmlFor="price" className="block ">Price</label>
                         <input type="number"
                             {...register("price",
@@ -227,14 +227,14 @@ const AddProduct = () => {
 
                     </div>
 
-                    <div className='space-y-1 text-sm'>
+                    <div className=' text-sm'>
                         <label htmlFor="condition" className="block ">Product Condition</label>
                         <select className="select select-primary w-full max-w-xs" defaultValue="Used" {...register("condition", { required: true })}>
                             <option value="used" >Used</option>
                             <option value="new">New</option>
                         </select>
                     </div>
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
                         <label htmlFor="phoneNo" className="block ">Contact Number</label>
                         <input type="text"
                             {...register("phoneNo",
@@ -243,7 +243,7 @@ const AddProduct = () => {
                         {errors.phoneNo && <p className='text-red-500'>{errors.phoneNo.message}</p>}
                     </div>
 
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
 
                         <label htmlFor="division" className={`block ${state.division ? "hidden" : ''}`}>Division</label>
                         <select defaultValue={""} className={`select select-primary w-auto max-w-xs ${state.division ? "hidden" : ''}`} name="division" onChange={async (e) => await dispatch({ type: "INPUT", payload: { name: e.target.name, value: e.target.value }, })} required>
@@ -273,16 +273,18 @@ const AddProduct = () => {
                             }
                         </select>
                     </div>
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
                         <label htmlFor="description" className="block ">Description</label>
-                        <input type="text"
+                        {/* <textarea className="textarea textarea-bordered" placeholder="Bio"></textarea> */}
+                        <textarea type="text"
                             {...register("description",
                                 { required: "Location is required", })}
-                            className="input input-bordered w-full max-w-xs" />
+                            className="textarea textarea-bordered w-full max-w-xs" ></textarea>
                         {errors.description && <p className='text-red-500'>{errors.description.message}</p>}
+
                     </div>
 
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
                         <label htmlFor="sname" className="block ">Seller Name</label>
                         <input type="text"
                             {...register("sname",
@@ -290,7 +292,7 @@ const AddProduct = () => {
                             className="input input-bordered w-full max-w-xs" defaultValue={user?.displayName} readOnly />
                         {errors.sname && <p className='text-red-500'>{errors.sname.message}</p>}
                     </div>
-                    <div className="space-y-1 text-sm">
+                    <div className=" text-sm">
                         <label htmlFor="email" className="block ">Email Address</label>
                         <input type="email"
                             {...register("email",

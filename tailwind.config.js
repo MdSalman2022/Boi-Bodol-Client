@@ -8,14 +8,6 @@ module.exports = {
       {
         mytheme: {
 
-          "text": "#222222",
-          "yellow": "#ffcd42",
-          "yellow2": "##ffd35c",
-          "black": "#000000",
-
-
-          "grey": "#f4f4f4",
-
           "primary": "#222222",
 
           "secondary": "#ffffff",

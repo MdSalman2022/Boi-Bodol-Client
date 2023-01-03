@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -7,21 +8,27 @@ import ProductCard from '../../Pages/ProductCard/ProductCard';
 
 const Trending = () => {
 
-    let [books, setBooks] = useState([])
+    // const [books, setBooks] = useState([])
 
-    let { grid } = useContext(AuthContext)
+    let { grid, books, setBooks } = useContext(AuthContext)
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/products`)
+    // useEffect(() => {
+    //     fetch(`${process.env.REACT_APP_SERVER_LINK}/products`)
+    //         .then(res => res.json())
+    //         .then(data => setBooks(data))
+    // }, [])
+
+
+    const { data: products = [] } = useQuery({
+        queryKey: ['products'],
+        queryFn: async () => await fetch(`${process.env.REACT_APP_SERVER_LINK}/trending`)
             .then(res => res.json())
-            .then(data => setBooks(data))
-    }, [])
+    })
 
+    // books = products?.filter(book => book.trending === true)
+    books = products;
 
     console.log(books);
-
-    books = books?.filter(book => book.trending === true)
-
 
     return (
         <div className=''>
