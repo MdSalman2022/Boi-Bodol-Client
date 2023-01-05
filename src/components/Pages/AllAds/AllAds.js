@@ -69,8 +69,8 @@ const AllAds = () => {
         <div className='mx-auto max-w-screen-2xl  '>
 
             <section className='text-center h-96 flex flex-col justify-center  border-b-2 border-neutral '>
-                <h1 className='text-5xl font-semibold text-neutral'>Find the right item for you</h1>
-                <p className='text-xl font-semibold text-neutral'>Our developer team has implemented an optimal algorithm <br /> to facilitate the easy discovery of your desired book.</p>
+                <h1 className='text-5xl font-bold text-neutral'>Find the right item for you</h1>
+                <p className='text-xl font-semibold text-neutral'>We have implemented an optimal algorithm <br /> to facilitate the easy discovery of your desired book.</p>
             </section>
             <br />
             <div className='flex justify-between '>
@@ -83,14 +83,14 @@ const AllAds = () => {
 
                 <div className='flex justify-between gap-3'>
                     <div>
-                        <label className="swap swap-rotate" >
+                        <label className="swap swap-rotate  hover:scale-105 transition duration-300" >
 
                             {/* <!-- this hidden checkbox controls the state --> */}
                             <input type="checkbox" />
 
 
                             {/* <!-- sun icon --> */}
-                            <svg onClick={handleClick} className="swap-off fill-current w-14 h-14 p-4 border-2 border-neutral rounded-lg " width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+                            <svg onClick={handleClick} className="swap-on fill-current w-14 h-14 p-4 border-2 border-secondary rounded-lg " width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" >
                                 <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                                     <g id="Dribbble-Light-Preview" transform="translate(-139.000000, -200.000000)" fill="#000000">
                                         <g id="icons" transform="translate(56.000000, 160.000000)">
@@ -103,7 +103,7 @@ const AllAds = () => {
 
 
                             {/* <!-- moon icon --> */}
-                            <svg onClick={handleClick} className='swap-on fill-current w-14 h-14 p-4 border-2 border-neutral rounded-lg ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" >
+                            <svg onClick={handleClick} className='swap-off fill-current w-14 h-14 p-4 border-2 border-secondary rounded-lg ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" >
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
 
@@ -113,7 +113,7 @@ const AllAds = () => {
                         </label>
                     </div>
                     <div className="dropdown dropdown-end  justify-between gap-3">
-                        <button tabIndex={0} className='btn btn-secondary w-14 h-14 mb-2 border-2 border-neutral hover:bg-[#f4f4f4] hover:border-neutral'><HiOutlineAdjustmentsHorizontal className='text-2xl text-neutral' /></button>
+                        <button tabIndex={0} className='btn bg-base-100 w-14 h-14 mb-2 border-2 border-secondary hover:bg-base-100 hover:scale-105  hover:border-secondary'><HiOutlineAdjustmentsHorizontal className='text-2xl text-secondary' /></button>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                             <li className='rounded-xl mb-2'><a onClick={handleFilter}>Recently Added</a></li>
                             <li className='rounded-xl mb-2'><a onClick={handleFilterPriceLtoH} >Low To High</a></li>

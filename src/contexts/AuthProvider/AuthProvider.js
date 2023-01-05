@@ -9,19 +9,26 @@ const auth = getAuth(app)
 const AuthProvider = ({ children }) => {
 
 
-    const [allUsers, setAllUsers] = useState('')
+    let [allUsers, setAllUsers] = useState([])
 
     const [loading, setLoading] = useState(true)
 
 
     const [grid, setGrid] = useState(true)
 
+    // useEffect(() => {
+    //     fetch(`${process.env.REACT_APP_SERVER_LINK}/users`)
+    //         .then(res => res.json())
+    //         .then(data => setAllUsers(data))
+    // }, [allUsers])
 
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_SERVER_LINK}/users`)
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: () => fetch(`${process.env.REACT_APP_SERVER_LINK}/users`)
             .then(res => res.json())
-            .then(data => setAllUsers(data))
-    }, [])
+    }, [allUsers])
+
+    allUsers = users;
 
 
     let [searchText, setSearchText] = useState("")

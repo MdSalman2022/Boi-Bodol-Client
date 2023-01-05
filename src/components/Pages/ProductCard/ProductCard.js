@@ -97,20 +97,20 @@ const ProductCard = ({ book, icon, grid }) => {
 
     return (
 
-        <div className={`transition-all duration-300 ease-in-out hover:bg-[#e6e6e6] hover:scale-105 card card-compact bg-base-100 rounded-lg flex flex-row w-full justify-center flex-wrap gap-5 shadow-lg rounded-lg'} `} >
+        <div className={`py-2 transition-all duration-300 ease-in-out group relative hover:bg-accent hover:scale-105 card card-compact bg-base-100 flex flex-row  flex-wrap w-96 lg:w-full justify-center  gap-5 shadow-lg rounded-lg'} `} >
 
-            <figure onClick={() => handleCardDetail(_id)} className='p-2 group relative'>
+            <figure onClick={() => handleCardDetail(_id)} className='p-2  relative'>
 
                 <LazyLoadImage className='rounded-lg object-cover h-80 w-64' name="img" src={img} alt="Shoes" />
                 <div
                     class="absolute top-0 left-0 w-full h-0 flex flex-col justify-center items-center bg-[#ffffff60] opacity-0 group-hover:h-full group-hover:opacity-100 duration-500">
-                    <h1 class="text-2xl text-neutral font-semibold">{name}</h1>
+                    <h1 class="text-2xl text-secondary font-semibold">{name}</h1>
 
 
                     <div class="b mx-auto h-20 w-20 flex justify-center items-center">
-                        <div class="i h-12 w-12 bg-white  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                        <div class="i h-12 w-12 bg-base-100  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
                         </div>
-                        <a class="text-center text-neutral font-semibold z-10 pointer-events-none">
+                        <a class="text-center text-secondary font-semibold z-10 pointer-events-none">
                             <MdRemoveRedEye className='text-2xl ' />
 
                         </a>

@@ -50,8 +50,8 @@ const DashboardLayout = () => {
                             {
                                 role === 'admin' ?
                                     <>
-                                        <li className='my-1'><Link to='/dashboard/allsellers'>All Sellers</Link></li>
-                                        <li className='my-1'><Link to='/dashboard/allbuyers'>All Buyers</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/allbuyers'>All Users</Link></li>
+                                        <li className='my-1'><Link to='/dashboard/allproducts'>All Products</Link></li>
                                         <li className='my-1'><Link to='/dashboard/reports'>Reported Items</Link></li>
                                     </>
                                     :

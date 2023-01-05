@@ -6,7 +6,7 @@ const AllBuyers = () => {
 
     let { allUsers, setAllUsers } = useContext(AuthContext)
 
-    let buyers = allUsers?.filter(allUser => allUser?.role === 'buyer')
+    // let buyers = allUsers?.filter(allUser => allUser?.role === 'buyer')
 
 
     const handleDelete = data => {
@@ -36,20 +36,20 @@ const AllBuyers = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Action</th>
+                            <th className='bg-secondary text-accent' ></th>
+                            <th className='bg-secondary text-accent' >Name</th>
+                            <th className='bg-secondary text-accent' >Email</th>
+                            <th className='bg-secondary text-accent' >Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {buyers &&
-                            buyers?.map((buyer, index) =>
-                                <tr key={buyer?._id}>
+                        {allUsers &&
+                            allUsers?.map((customer, index) =>
+                                <tr key={customer?._id}>
                                     <th>{index + 1}</th>
-                                    <td>{buyer?.name}</td>
-                                    <td>{buyer?.email}</td>
-                                    <td><button onClick={() => handleDelete(buyer)} className="btn btn-error">Delete</button></td>
+                                    <td>{customer?.name}</td>
+                                    <td>{customer?.email}</td>
+                                    <td><button onClick={() => handleDelete(customer)} className="btn btn-error">Delete</button></td>
                                 </tr>
                             )
 

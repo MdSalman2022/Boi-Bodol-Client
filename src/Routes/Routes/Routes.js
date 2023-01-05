@@ -11,7 +11,6 @@ import AddProduct from '../../components/Pages/Dashboard/AddProduct/AddProduct';
 import MyProducts from '../../components/Pages/Dashboard/MyProducts/MyProducts';
 import MyContacts from '../../components/Pages/Dashboard/MyContacts/MyContacts';
 import DashboardLayout from '../../Layout/DashboardLayout';
-import AllSeller from '../../components/Pages/Dashboard/AllSellers/AllSellers';
 import AllBuyers from '../../components/Pages/Dashboard/AllBuyers/AllBuyers';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ErrorPage from '../../components/Pages/ErrorPage/ErrorPage';
@@ -22,6 +21,7 @@ import Location from '../../components/Shared/Location/Location';
 import AllBooks from '../../components/Shared/AllBooks/AllBooks';
 import AllAds from '../../components/Pages/AllAds/AllAds';
 import CardDetail from '../../components/Shared/CardDetail/CardDetail';
+import AllProducts from '../../components/Pages/Dashboard/AllProducts/AllProducts';
 
 
 export const router = createBrowserRouter([
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <Dashboard></Dashboard>
+                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
             },
             {
                 path: '/dashboard/wishlist',
@@ -101,12 +101,12 @@ export const router = createBrowserRouter([
                 element: <MyContacts></MyContacts>
             },
             {
-                path: '/dashboard/allsellers/',
-                element: <AllSeller></AllSeller>
-            },
-            {
                 path: '/dashboard/allbuyers/',
                 element: <AllBuyers></AllBuyers>
+            },
+            {
+                path: '/dashboard/allproducts',
+                element: <AllProducts></AllProducts>
             },
             {
                 path: '/dashboard/reports/',

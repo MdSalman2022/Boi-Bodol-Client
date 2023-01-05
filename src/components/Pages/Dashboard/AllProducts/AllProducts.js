@@ -1,43 +1,35 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
 
-const MyProducts = () => {
+const AllProducts = () => {
 
     const { user } = useContext(AuthContext)
-    const [myProducts, setMyProducts] = useState('')
+    let [allProducts, setAllProducts] = useState([])
 
 
     const [id, setId] = useState('')
 
 
 
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_SERVER_LINK}/myproducts?email=${user?.email}`)
+    // useEffect(() => {
+    //     fetch(`${process.env.REACT_APP_SERVER_LINK}/allproducts`)
+    //         .then(res => res.json())
+    //         .then(data => setAllProducts(data))
+    // }, [id, allProducts])
+
+
+
+    const { data: products = [] } = useQuery({
+        queryKey: ['allproducts'],
+        queryFn: () => fetch(`${process.env.REACT_APP_SERVER_LINK}/allproducts`)
             .then(res => res.json())
-            .then(data => setMyProducts(data))
-    }, [user?.email, id, myProducts])
+    }, [id, allProducts])
 
+    allProducts = products;
 
-
-
-    const handleAvailable = id => {
-        fetch(`${process.env.REACT_APP_SERVER_LINK}/myproducts/${id} `, {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.modifiedCount > 0) {
-                    console.log(data)
-                    setId(id)
-                }
-            })
-    }
-
-
+    console.log(allProducts)
 
 
 
@@ -53,33 +45,35 @@ const MyProducts = () => {
                     console.log(data)
                     if (data.deletedCount > 0) {
                         toast.success('Product Deleted Successfully')
-                        const remainingProducts = myProducts?.filter(product => product._id !== data._id)
-                        setMyProducts(remainingProducts)
+                        const remainingProducts = allProducts?.filter(product => product._id !== data._id)
+                        setId(data._id)
+                        setAllProducts(remainingProducts)
                     }
                 })
         }
     }
 
 
+
     return (
         <div>
-            <h1 className="text-3xl my-5 text-center font-semibold">My Products</h1>
+            <h1 className="text-3xl my-5 text-center font-semibold">Products</h1>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
-                    <thead>
+                    <thead className=''>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th className='bg-secondary text-accent' ></th>
+                            <th className='bg-secondary text-accent' >Name</th>
+                            <th className='bg-secondary text-accent' >Price</th>
+                            <th className='bg-secondary text-accent' >Email</th>
+                            <th className='bg-secondary text-accent' >Status</th>
+                            <th className='bg-secondary text-accent' >Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {myProducts &&
-                            myProducts.map((myProduct, index) =>
+                        {allProducts &&
+                            allProducts.map((myProduct, index) =>
                                 <tr key={myProduct._id}>
                                     <th>{index + 1}</th>
                                     <td>{myProduct.name}</td>
@@ -87,8 +81,6 @@ const MyProducts = () => {
                                     <td>{myProduct.email}</td>
                                     <td>{myProduct.sold ? 'Sold' : "Available"}</td>
                                     <td>
-                                        <button disabled={myProduct.sold} onClick={() => handleAvailable(myProduct._id)} className="btn btn-success mr-2">Sold</button>
-
                                         <button onClick={() => handleDelete(myProduct)} className="btn   btn-error">Delete</button>
                                     </td>
                                 </tr>
@@ -101,4 +93,4 @@ const MyProducts = () => {
     );
 };
 
-export default MyProducts;
+export default AllProducts;

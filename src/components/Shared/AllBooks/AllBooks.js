@@ -29,7 +29,7 @@ const AllBooks = () => {
 
     return (
         <div className=''>
-            <div className='grid lg:grid-cols-4 gap-5 mx-auto  justify-items-center '>
+            <div className='grid lg:grid-cols-4 gap-5 mx-auto  justify-items-center container'>
                 {books &&
                     books.map(book => <ProductCard book={book} key={book._id} grid={grid}></ProductCard>)
                 }

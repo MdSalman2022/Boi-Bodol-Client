@@ -49,7 +49,7 @@ const WishList = () => {
                                     <td>
                                         <Link to={`/details/${product.pId}`}>
                                             <div class="b mx-auto h-20 w-20 flex justify-center items-center">
-                                                <div class="i h-12 w-12 bg-white  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                                                <div class="i h-12 w-12 bg-secondary  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
                                                 </div>
                                                 <button class="text-center text-neutral font-semibold z-10 pointer-events-none">
                                                     <MdRemoveRedEye className='text-2xl ' />

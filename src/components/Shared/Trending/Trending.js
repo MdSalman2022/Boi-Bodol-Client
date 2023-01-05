@@ -31,16 +31,19 @@ const Trending = () => {
     console.log(books);
 
     return (
-        <div className=''>
-
-            <div className='grid lg:grid-cols-4 mx-auto  justify-items-center '>
+        <div className=' bg-secondary my-5'>
+            <div className=" py-8 bg-transparent rounded-xl mx-2 lg:mx-auto text-center">
+                <span className='font-bold text-5xl text-accent underline decoration-neutral '>Trending Books</span>
+            </div>
+            <div className='grid lg:grid-cols-4 mx-auto  justify-items-center container'>
                 {books &&
-                    books.map(book => <ProductCard book={book} icon={<AiFillStar className='text-yellow-400' />} key={book._id} grid={grid}></ProductCard>)
+                    books.map(book => <ProductCard book={book} icon={<AiFillStar className='text-yellow-400' />} key={book._id} ></ProductCard>)
                 }
 
             </div>
             <div className='flex justify-center items-center'>
-                <Link to="/allads"><button className="btn btn-outline btn-neutral hover:bg-neutral my-10">See More</button></Link>
+                <Link to="/allads"><button className="btn btn-neutral border-none text-white hover:bg-secondary my-10">See More</button></Link>
+
             </div>
         </div>
     );

@@ -88,7 +88,7 @@ const CardDetail = () => {
 
 
     return (
-        <div className="bg-white">
+        <div className="bg-base-100">
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -187,11 +187,11 @@ const CardDetail = () => {
                                 </div>
                             </div>
 
-                            <button disabled={isAdded.length > 0 ? true : false} onClick={(event) => handleBooking(event, details)} class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-white transition duration-300 ease-out border-2 border-neutral rounded-full shadow-md group">
-                                <span class={`absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-white ${isAdded.length > 0 ? "" : "group-hover:translate-x-0"}  ease`}>
-                                    <GrAdd className='text-white' />
+                            <button disabled={isAdded.length > 0 ? true : false} onClick={(event) => handleBooking(event, details)} class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-secondary transition duration-300 ease-out border-2 border-neutral rounded-full shadow-md group">
+                                <span class={`absolute inset-0 flex items-center justify-center w-full h-full text-secondary duration-300 -translate-x-full bg-secondary ${isAdded.length > 0 ? "" : "group-hover:translate-x-0"}  ease`}>
+                                    <GrAdd className='text-secondary' />
                                 </span>
-                                <span class={`absolute flex items-center justify-center w-full h-full transition-all duration-300 transform  ${isAdded.length > 0 ? " bg-base-100 text-neutral " : " bg-neutral text-white  group-hover:translate-x-full"}  ease font-semibold`}>{isAdded.length > 0 ? "Already Added" : "Add to Wishlist"}</span>
+                                <span class={`absolute flex items-center justify-center w-full h-full transition-all duration-300 transform  ${isAdded.length > 0 ? " bg-base-100 text-neutral " : " bg-neutral text-secondary  group-hover:translate-x-full"}  ease font-semibold`}>{isAdded.length > 0 ? "Already Added" : "Add to Wishlist"}</span>
                                 <span class="relative invisible">{isAdded.length > 0 ? "Already Added" : "Add to Wishlist"}</span>
                             </button>
 

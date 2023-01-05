@@ -1,11 +1,14 @@
 import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Footer = () => {
     return (
         <div className='mt-10'>
-            <footer className="footer footer-center p-10 border border-1 border-[#000000] text-black-content py-32">
+            <footer className="footer footer-center p-10 border border-1 border-[#000000] text-black-content py-12">
                 <div>
-                    <p className="text-5xl font-semibold">B&S</p>
+                    <div className="font-semibold text-center flex justify-center my-2">
+                        <LazyLoadImage src="https://i.ibb.co/NsGx83q/logoboi.png" className='w-44' alt="logo" border="0" />
+                    </div>
                     <p className="font-semibold">
 
                     </p>

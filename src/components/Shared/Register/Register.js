@@ -113,13 +113,13 @@ const Register = () => {
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
 
-                    <input className='btn btn-primary hover:btn-neutral w-full' value="Sign Up" type="submit" />
+                    <input className='btn btn-primary hover:btn-secondary text-white w-full' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
 
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
-                    <p className="px-3 text-sm text-black">Register with Google</p>
+                    <p className="px-3 text-sm text-neutral">Register with Google</p>
                     <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
                 </div>
                 <div className="flex justify-center space-x-4">
