@@ -17,28 +17,7 @@ const ProductCard = ({ book, icon, grid }) => {
 
     const { name, img, _id, location, description, sname, phoneNo, dateAdded, price, email, upazila, district } = book;
 
-    console.log(book)
-
     let { user } = useContext(AuthContext)
-
-
-    // const handleReportItem = data => {
-    //     const agree = window.confirm(`Do you want to report this product named ${data.name}`)
-    //     if (agree) {
-    //         fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/${data._id}`, {
-    //             method: "PUT",
-    //             headers: {
-    //                 "content-type": "application/json",
-    //             },
-    //         })
-    //             .then((res) => res.json())
-    //             .then((data) => {
-    //                 if (data.matchedCount > 0) {
-    //                     toast.success(`${data.name} reported successfully!`);
-    //                 }
-    //             });
-    //     }
-    // }
 
 
 
@@ -97,22 +76,18 @@ const ProductCard = ({ book, icon, grid }) => {
 
     return (
 
-        <div className={`py-2 transition-all duration-300 ease-in-out group relative hover:bg-accent hover:scale-105 card card-compact bg-base-100 flex flex-row  flex-wrap w-96 lg:w-full justify-center  gap-5 shadow-lg rounded-lg'} `} >
+        <div className={` transition-all duration-300 ease-in-out group relative hover:bg-accent hover:scale-105 card card-compact bg-base-100 flex flex-row  flex-wrap w-80 lg:w-full justify-center  gap-2 shadow-lg rounded-lg'} `} >
 
-            <figure onClick={() => handleCardDetail(_id)} className='p-2  relative'>
+            <figure onClick={() => handleCardDetail(_id)} className='  relative'>
 
-                <LazyLoadImage className='rounded-lg object-cover h-80 w-64' name="img" src={img} alt="Shoes" />
-                <div
-                    class="absolute top-0 left-0 w-full h-0 flex flex-col justify-center items-center bg-[#ffffff60] opacity-0 group-hover:h-full group-hover:opacity-100 duration-500">
-                    <h1 class="text-2xl text-secondary font-semibold">{name}</h1>
-
-
-                    <div class="b mx-auto h-20 w-20 flex justify-center items-center">
-                        <div class="i h-12 w-12 bg-base-100  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                <LazyLoadImage className='rounded-t-lg object-cover h-80 w-96' name="img" src={img} alt="Shoes" />
+                <div class="absolute bg-white bg-opacity-40 transition-all top-0 left-0 w-full flex flex-col justify-center items-center  opacity-0 group-hover:h-full group-hover:opacity-100 duration-300">
+                    <h1 class="text-2xl text-secondary font-bold">{name}</h1>
+                    <div class="mx-auto h-20 w-20 flex justify-center items-center">
+                        <div class="h-12 w-12 bg-base-100  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
                         </div>
                         <a class="text-center text-secondary font-semibold z-10 pointer-events-none">
                             <MdRemoveRedEye className='text-2xl ' />
-
                         </a>
                     </div>
 

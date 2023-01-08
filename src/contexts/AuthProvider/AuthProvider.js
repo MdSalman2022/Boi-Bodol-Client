@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, onAuthStateChanged, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, deleteUser } from "firebase/auth";
+
 import app from '../../firebase/firebase.config';
 import { useQuery } from '@tanstack/react-query';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 export const AuthContext = createContext();
 const auth = getAuth(app)
@@ -12,6 +14,21 @@ const AuthProvider = ({ children }) => {
     let [allUsers, setAllUsers] = useState([])
 
     const [loading, setLoading] = useState(true)
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 8000)
+    }, [])
+
+
+    if (loading) {
+        <SyncLoader color={'#F97F40'} loading={loading} // cssOverride={override}
+            size={15}
+            data-testid="loader"
+        />
+    }
 
 
     const [grid, setGrid] = useState(true)
@@ -70,6 +87,29 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, userInfo)
     }
 
+    //delete user 
+    const deleteUser = (uid) => {
+        // Look up the user by their UID
+        const u = app().getUser(uid);
+        console.log(u);
+        // Delete the user
+        u.delete().then(() => {
+            // User deleted successfully
+        }).catch((error) => {
+            console.log(error);
+            // An error occurred
+        });
+    }
+
+
+    // deleteUser(user).then(() => {
+    //     // User deleted.
+    // }).catch((error) => {
+    //     // An error ocurred
+    //     // ...
+    // });
+
+
     const signIn = (email, password) => {
         setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
@@ -84,9 +124,9 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, provider)
     }
 
-    if (loading) {
-        <progress className="progress w-56"></progress>
-    }
+    // if (loading) {
+    //     <progress className="progress w-56"></progress>
+    // }
 
 
 
@@ -113,6 +153,7 @@ const AuthProvider = ({ children }) => {
         signIn,
         providerLogin,
         logOut,
+        deleteUser,
         setSearchText,
         searchText,
         books,

@@ -14,6 +14,7 @@ const AllAds = () => {
     // const [books, setBooks] = useState([])
     const [data, setData] = useState([])
 
+    const [selectCategory, setSelectCategory] = useState('')
     // useEffect(() => {
     //     const fetchData = async () => {
     //         const res = await fetch(`${process.env.REACT_APP_SERVER_LINK}/products`)
@@ -65,6 +66,15 @@ const AllAds = () => {
         setGrid(!grid)
     }
 
+    const handleCategory = event => {
+        event.preventDefault()
+        console.log(event.target.value)
+        const sortedData = books.filter(book => book.categoryId === event.target.value)
+        console.log(sortedData);
+        setData(sortedData)
+    }
+
+
     return (
         <div className='mx-auto max-w-screen-2xl  '>
 
@@ -74,9 +84,9 @@ const AllAds = () => {
             </section>
             <br />
             <div className='flex justify-between '>
-                <select className="select select-bordered w-full max-w-xs">
+                <select onChange={handleCategory} className="select select-bordered w-full max-w-xs">
                     {
-                        categories.map(category => <option value={category.category} key={category._id}>{category.category}</option>)
+                        categories.map(category => <option className='bg-secondary text-neutral' selected value={category.id} key={category._id}>{category.category}</option>)
                     }
                 </select>
 
@@ -126,7 +136,7 @@ const AllAds = () => {
             <br />
 
 
-            <div className={`${grid ? 'grid grid-cols-4 gap-5 justify-items-center' : 'flex justify-center flex-wrap gap-5'} `} >
+            <div className={`${grid ? 'grid grid-cols-4 gap-5 lg:gap-14 justify-items-center  my-10' : 'flex justify-center flex-wrap gap-5  my-10'} `} >
                 {books && !data.length ?
                     books?.map(book => <ProductCard book={book} key={book._id}></ProductCard>)
                     :

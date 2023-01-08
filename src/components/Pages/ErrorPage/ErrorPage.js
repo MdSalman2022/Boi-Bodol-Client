@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
+
     return (
         <div>
             <section className="flex items-center h-full p-16 ">

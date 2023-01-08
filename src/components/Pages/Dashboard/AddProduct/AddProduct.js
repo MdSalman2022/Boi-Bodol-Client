@@ -156,7 +156,7 @@ const AddProduct = () => {
 
     return (
         <div className=' scrollbar-hide'>
-            <div className="p-8 space-y-3 rounded-xl bg-base-200 mx-auto ">
+            <div className="p-8 space-y-3 rounded-xl bg-secondary bg-opacity-5  mx-auto ">
                 <h1 className="text-3xl font-semibold text-center">Add A Product</h1>
                 <form onSubmit={handleSubmit(handleProductSubmit)} noValidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid grid grid-cols-2   scrollbar-hide">
 
@@ -307,7 +307,7 @@ const AddProduct = () => {
                         </label>
                     </div>
 
-                    <input className='btn btn-secondary text-white  text-secondary w-full max-w-xs mt-4' value="Submit" type="submit" />
+                    <input className='btn btn-neutral hover:btn-secondary text-white  text-secondary w-full max-w-xs mt-4' value="Submit" type="submit" />
                 </form>
             </div>
         </div>

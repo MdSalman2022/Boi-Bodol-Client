@@ -15,6 +15,8 @@ const Register = () => {
 
     const [createdUserEmail, setCreatedUserEmail] = useState('')
 
+    const { allUsers } = useContext(AuthContext)
+
     const location = useLocation()
 
     const from = location?.state?.from.pathname || '/'
@@ -27,14 +29,14 @@ const Register = () => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                // console.log(user);
                 toast.success("Successfully Registered")
                 const userInfo = {
-                    displayName: data.name,
+                    displayName: user.name,
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email, data.role = "user")
+                        saveUser(data.name, data.email, data.role = "user", user.uid)
                         navigate(from, { replace: true })
                     })
                     .catch(err => console.log(err))
@@ -46,8 +48,8 @@ const Register = () => {
             })
     }
 
-    const saveUser = (name, email, role) => {
-        const user = { name, email, role }
+    const saveUser = (name, email, role, uid) => {
+        const user = { name, email, role, uid }
         fetch(`${process.env.REACT_APP_SERVER_LINK}/users`, {
             method: 'POST',
             headers: {
@@ -70,8 +72,14 @@ const Register = () => {
         providerLogin(Provider)
             .then(result => {
                 const user = result.user;
-                saveUser(user.displayName, user.email, role)
-                navigate(from, { replace: true })
+                let findUser = allUsers.find(u => u.email === user.email)
+                if (findUser) {
+                    navigate(from, { replace: true })
+                }
+                else {
+                    saveUser(user.displayName, user.email, role, user.uid)
+                    navigate(from, { replace: true })
+                }
             })
             .catch(error => console.error(error))
     }
@@ -81,11 +89,11 @@ const Register = () => {
 
     return (
         <div className=' my-20'>
-            <div className="w-96 p-8 space-y-3 rounded-xl bg-base-200 mx-auto">
-                <h1 className="text-3xl font-semibold text-center">Register</h1>
+            <div className="w-96 p-8 space-y-3 rounded-xl bg-transparent border-2 border-secondary mx-auto">
+                <h1 className="text-3xl font-semibold text-center text-neutral">Register</h1>
                 <form onSubmit={handleSubmit(handleSignUp)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
-                        <label for="username" className="block ">Username</label>
+                        <label for="username" className="block text-neutral">Username</label>
                         <input type="text"
                             {...register("name",
                                 { required: "Name is required", })}
@@ -93,7 +101,7 @@ const Register = () => {
                         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label for="email" className="block ">Email Address</label>
+                        <label for="email" className="block text-neutral">Email Address</label>
                         <input type="email"
                             {...register("email",
                                 { required: "Email is required" })}
@@ -101,7 +109,7 @@ const Register = () => {
                         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label for="password" className="block ">Password</label>
+                        <label for="password" className="block text-neutral">Password</label>
                         <input type="password"
                             {...register("password",
                                 {
@@ -113,7 +121,7 @@ const Register = () => {
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                     </div>
 
-                    <input className='btn btn-primary hover:btn-secondary text-white w-full' value="Sign Up" type="submit" />
+                    <input className='btn btn-neutral hover:btn-secondary text-white w-full' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}
 
                 </form>

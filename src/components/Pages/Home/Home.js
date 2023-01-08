@@ -17,9 +17,7 @@ const Home = () => {
             <div className="font-semibold text-center flex justify-center lg:hidden my-2">
                 <LazyLoadImage src="https://i.ibb.co/NsGx83q/logoboi.png" className='w-44' alt="logo" border="0" />
             </div>
-            <div className=" py-8 bg-transparent rounded-xl mx-2 lg:mx-auto text-center">
-                {/* <span className='font-semibold text-5xl text-[#000000] '>Category</span> */}
-            </div>
+
             <CategoryList></CategoryList>
 
             <Trending />

@@ -11,13 +11,12 @@ import AddProduct from '../../components/Pages/Dashboard/AddProduct/AddProduct';
 import MyProducts from '../../components/Pages/Dashboard/MyProducts/MyProducts';
 import MyContacts from '../../components/Pages/Dashboard/MyContacts/MyContacts';
 import DashboardLayout from '../../Layout/DashboardLayout';
-import AllBuyers from '../../components/Pages/Dashboard/AllBuyers/AllBuyers';
+import AllUser from '../../components/Pages/Dashboard/AllUser/AllUser';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ErrorPage from '../../components/Pages/ErrorPage/ErrorPage';
 import AllReports from '../../components/Pages/Dashboard/AllReports/AllReports';
 import SearchPage from '../../components/Pages/SearchPage/SearchPage';
 import SearchRoute from '../SearchRoute/SearchRoute';
-import Location from '../../components/Shared/Location/Location';
 import AllBooks from '../../components/Shared/AllBooks/AllBooks';
 import AllAds from '../../components/Pages/AllAds/AllAds';
 import CardDetail from '../../components/Shared/CardDetail/CardDetail';
@@ -73,7 +72,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         errorElement: <ErrorPage />,
         children: [
             {
@@ -86,7 +85,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/addproduct/',
-                element: <AddProduct></AddProduct>
+                element: <PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             },
             {
                 path: '/dashboard/addproduct/',
@@ -101,8 +100,8 @@ export const router = createBrowserRouter([
                 element: <MyContacts></MyContacts>
             },
             {
-                path: '/dashboard/allbuyers/',
-                element: <AllBuyers></AllBuyers>
+                path: '/dashboard/allusers/',
+                element: <AllUser></AllUser>
             },
             {
                 path: '/dashboard/allproducts',

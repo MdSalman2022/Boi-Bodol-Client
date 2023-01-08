@@ -8,12 +8,15 @@ const Login = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { signIn } = useContext(AuthContext)
+    const { signIn, allUsers } = useContext(AuthContext)
 
     const [loginError, setLoginError] = useState('')
     const [loginUserEmail, setLoginUserEmail] = useState('')
 
     const { createUser, updateUser, providerLogin } = useContext(AuthContext)
+
+
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
 
 
     const location = useLocation();
@@ -23,7 +26,7 @@ const Login = () => {
 
 
     const handleLogin = data => {
-        console.log(data);
+        // console.log(data);
         setLoginError('')
         signIn(data.email, data.password)
             .then(result => {
@@ -39,24 +42,51 @@ const Login = () => {
     }
 
 
+    const saveUser = (name, email, role) => {
+
+        const user = { name, email, role }
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/users`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('save user', data)
+                setCreatedUserEmail(email)
+            })
+    }
+
     const googleSignIn = event => {
         event.preventDefault();
+
+        let role = "user";
         const Provider = new GoogleAuthProvider();
         providerLogin(Provider)
             .then(result => {
                 const user = result.user;
-                navigate(from, { replace: true })
+                let findUser = allUsers.find(u => u.email === user.email)
+                if (findUser) {
+                    navigate(from, { replace: true })
+                }
+                else {
+                    saveUser(user.displayName, user.email, role)
+                    navigate(from, { replace: true })
+                }
             })
             .catch(error => console.error(error))
     }
 
+
     return (
         <div className=' my-20'>
-            <div className="w-96 p-8 space-y-3 rounded-xl bg-base-200 mx-auto">
-                <h1 className="text-3xl font-semibold text-center">Login</h1>
+            <div className="w-96 p-8 space-y-3 rounded-xl bg-transparent border-2 border-secondary mx-auto">
+                <h1 className="text-3xl font-semibold text-center text-neutral">Login</h1>
                 <form onSubmit={handleSubmit(handleLogin)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
-                        <label className="label"><span className="label-text">Email</span></label>
+                        <label className="label"><span className="label-text text-neutral">Email</span></label>
                         <input type="text"
                             {...register("email", {
                                 required: "Email is required"
@@ -65,7 +95,7 @@ const Login = () => {
                         {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
                     <div className="space-y-1 text-sm">
-                        <label className="label"><span className="label-text">Password</span></label>
+                        <label className="label"><span className="label-text text-neutral">Password</span></label>
                         <input type="password"
                             {...register("password", {
                                 required: "Password is required",
@@ -74,7 +104,7 @@ const Login = () => {
                             className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-primary hover:btn-secondary text-white w-full' value="Login" type="submit" />
+                    <input className='btn btn-neutral hover:btn-secondary text-white w-full' value="Login" type="submit" />
                     <div>
                         {
                             loginError && <p className='text-red-500'>{loginError}</p>
@@ -83,7 +113,7 @@ const Login = () => {
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
-                    <p className="px-3 text-sm text-neutral">Login with Google</p>
+                    <p className="px-3 text-sm text-secondary">Login with Google</p>
                     <div className="flex-1 h-px sm:w-16 bg-gray-700"></div>
                 </div>
                 <div className="flex justify-center space-x-4">

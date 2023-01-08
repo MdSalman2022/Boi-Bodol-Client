@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const MyProducts = () => {
 
@@ -69,12 +70,12 @@ const MyProducts = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th className='bg-secondary text-accent' ></th>
+                            <th className='bg-secondary text-accent' >Name</th>
+                            <th className='bg-secondary text-accent' >Price</th>
+                            <th className='bg-secondary text-accent' >Email</th>
+                            <th className='bg-secondary text-accent' >Status</th>
+                            <th className='bg-secondary text-accent' >Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,7 +90,7 @@ const MyProducts = () => {
                                     <td>
                                         <button disabled={myProduct.sold} onClick={() => handleAvailable(myProduct._id)} className="btn btn-success mr-2">Sold</button>
 
-                                        <button onClick={() => handleDelete(myProduct)} className="btn   btn-error">Delete</button>
+                                        <button onClick={() => handleDelete(myProduct)} className="btn   btn-error"><FaTrashAlt /></button>
                                     </td>
                                 </tr>
                             )

@@ -1,17 +1,26 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const AllReports = () => {
 
 
-    const [reports, setReport] = useState('')
+    let [reports, setReport] = useState([])
 
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/`)
+    // useEffect(() => {
+    //     fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/`)
+    //         .then(res => res.json())
+    //         .then(data => setReport(data))
+    // }, [])
+
+
+    const { data: allreports = [] } = useQuery({
+        queryKey: ['allproducts'],
+        queryFn: async () => await fetch(`${process.env.REACT_APP_SERVER_LINK}/allproducts`)
             .then(res => res.json())
-            .then(data => setReport(data))
-    }, [])
+    })
 
+    reports = allreports.filter(report => report?.isReported === true);
 
     const handleDelete = data => {
         fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/${data?._id} `, {
@@ -41,10 +50,13 @@ const AllReports = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Action</th>
+                            <th className='bg-secondary text-accent'></th>
+                            <th className='bg-secondary text-accent'>Name</th>
+                            <th className='bg-secondary text-accent'>Seller Name</th>
+                            <th className='bg-secondary text-accent'>Email</th>
+                            <th className='bg-secondary text-accent'>Report Reason</th>
+                            <th className='bg-secondary text-accent'>Reported By</th>
+                            <th className='bg-secondary text-accent'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +65,9 @@ const AllReports = () => {
                                 <tr key={report?._id}>
                                     <th>{index + 1}</th>
                                     <td>{report?.name}</td>
+                                    <td>{report?.sname}</td>
+                                    <td>{report?.reportType}</td>
+                                    <td>{report?.reportByUser}</td>
                                     <td>{report?.email}</td>
                                     <td>
                                         <button onClick={() => handleDelete(report)} className="btn btn-error">Remove</button>

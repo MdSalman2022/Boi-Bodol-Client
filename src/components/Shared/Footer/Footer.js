@@ -3,7 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Footer = () => {
     return (
-        <div className='mt-10'>
+        <div className=' '>
             <footer className="footer footer-center p-10 border border-1 border-[#000000] text-black-content py-12">
                 <div>
                     <div className="font-semibold text-center flex justify-center my-2">

@@ -35,7 +35,7 @@ const Trending = () => {
             <div className=" py-8 bg-transparent rounded-xl mx-2 lg:mx-auto text-center">
                 <span className='font-bold text-5xl text-accent underline decoration-neutral '>Trending Books</span>
             </div>
-            <div className='grid lg:grid-cols-4 mx-auto  justify-items-center container'>
+            <div className='grid lg:grid-cols-4 mx-auto gap-5 lg:gap-14 justify-items-center container'>
                 {books &&
                     books.map(book => <ProductCard book={book} icon={<AiFillStar className='text-yellow-400' />} key={book._id} ></ProductCard>)
                 }

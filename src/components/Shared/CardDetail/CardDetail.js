@@ -8,7 +8,8 @@ import { GrAdd } from 'react-icons/gr';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-
+import { MdReport } from 'react-icons/md';
+import ProductCard from '../../Pages/ProductCard/ProductCard';
 
 
 const CardDetail = () => {
@@ -19,7 +20,32 @@ const CardDetail = () => {
 
     const { _id, name, sname, price, condition, publication, edition, authenticity, nagotiable, courier, phoneNo, description, email, img, sold, trending, featured, urgent, division, district, upazila, dateAdded, date, categoryId, category } = details;
 
-    console.log(details);
+    // console.log(details);
+    const [reportType, setReportType] = useState('')
+
+
+
+    const handleReport = (event, data) => {
+        event.preventDefault()
+
+        console.log(reportType)
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/reportedProducts/${data._id}`, {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ reportType, user: user.email })
+        }).then((res) => res.json())
+            .then((data) => {
+                if (data.modifiedCount > 0) {
+                    console.log(data)
+                    toast.success(`${name} reported successfully!`);
+                }
+            });
+        console.log("fetch done")
+    }
+
+
 
 
     const handleBooking = (event, data) => {
@@ -73,6 +99,18 @@ const CardDetail = () => {
 
 
     const [cart, setCart] = useState([])
+    let [suggestions, setSuggestions] = useState([])
+
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_SERVER_LINK}/products`)
+            .then(res => res.json())
+            .then(data => setSuggestions(data))
+    }, [user?.email, cart])
+
+
+    suggestions = suggestions.filter(suggestion => suggestion.categoryId === categoryId && suggestion._id !== _id)
+
 
     //filtering orders by email
     useEffect(() => {
@@ -81,10 +119,8 @@ const CardDetail = () => {
             .then(data => setCart(data))
     }, [user?.email, cart])
 
-    console.log(cart.filter(cart => cart.pId === _id))
 
     const isAdded = cart.filter(cart => cart.pId === _id)
-
 
 
     return (
@@ -121,7 +157,7 @@ const CardDetail = () => {
 
                 {/* Image gallery */}
                 <div className="mx-auto flex justify-center ">
-                    <div className="w-80 h-full hidden overflow-hidden rounded-lg lg:block">
+                    <div className="w-80 h-full hidden overflow-hidden rounded-lg lg:block ">
                         <LazyLoadImage
                             src={img}
                             alt="book"
@@ -145,7 +181,9 @@ const CardDetail = () => {
                     {/* Options */}
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl tracking-tight text-gray-900">Price: {price}Tk <div className="badge badge-md  text-secondary">{`${nagotiable === true ? "Nagotiable" : ''}`}</div></p>
+                        <p className="text-3xl tracking-tight text-gray-900">Price: {price}Tk
+                            <div className={`badge badge-md  text-secondary ${nagotiable === true ? "" : "hidden"}`}>{`${nagotiable === true ? "Nagotiable" : ''}`}</div>
+                        </p>
 
                         <form className="mt-10">
                             {/* Colors */}
@@ -166,7 +204,7 @@ const CardDetail = () => {
 
                                             ?
 
-                                            ` ${((parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) / 24).toFixed(0)} days ago ${((parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) % 24).toFixed(0)} hours ago`
+                                            ` ${((parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) / 24).toFixed(0)} days and ${((parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) % 24).toFixed(0)} hours ago`
                                             :
                                             `1 day ${((parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) % 24).toFixed(0)} hours ago`
                                         :
@@ -188,7 +226,7 @@ const CardDetail = () => {
                             </div>
 
                             <button disabled={isAdded.length > 0 ? true : false} onClick={(event) => handleBooking(event, details)} class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-secondary transition duration-300 ease-out border-2 border-neutral rounded-full shadow-md group">
-                                <span class={`absolute inset-0 flex items-center justify-center w-full h-full text-secondary duration-300 -translate-x-full bg-secondary ${isAdded.length > 0 ? "" : "group-hover:translate-x-0"}  ease`}>
+                                <span class={`absolute inset-0 flex items-center justify-center w-full h-full duration-300 -translate-x-full bg-neutral ${isAdded.length > 0 ? "" : "group-hover:translate-x-0"}  ease`}>
                                     <GrAdd className='text-secondary' />
                                 </span>
                                 <span class={`absolute flex items-center justify-center w-full h-full transition-all duration-300 transform  ${isAdded.length > 0 ? " bg-base-100 text-neutral " : " bg-neutral text-secondary  group-hover:translate-x-full"}  ease font-semibold`}>{isAdded.length > 0 ? "Already Added" : "Add to Wishlist"}</span>
@@ -211,11 +249,46 @@ const CardDetail = () => {
                                 <p className='text-lg font-semibold'>Publication: <span className="font-normal">{publication}</span></p>
                                 <p className='text-lg font-semibold'>Edition: <span className="font-normal">{edition}</span></p>
                                 <p className='text-lg font-semibold'>Courier: <span className='font-normal'>{courier ? 'Available' : 'Not Available'}</span></p>
+                                {/* <button htmlFor="my-modal"  onClick={() => handleReport(details)} className="btn btn-ghost text-error btn-outline text-2xl"><MdReport /> Report ad</button> */}
+                                <label htmlFor="my-modal" className="btn  btn-ghost text-error btn-outline text-2xl"><MdReport /> Report ad</label>
 
+                                {/* Put this part before </body> tag */}
+                                <input type="checkbox" id="my-modal" className="modal-toggle" />
+                                <div className="modal bg-secondary bg-opacity-60">
+                                    <div className="modal-box">
+                                        <h3 className="font-bold text-lg pb-5">Why do you want to report this post?</h3>
+                                        <form onSubmit={(event) => handleReport(event, details)}>
+                                            <select className="select select-bordered w-full max-w-xs  " defaultValue={reportType} onChange={(e) => setReportType(e.target.value)}>
+                                                <option className='bg-neutral' value="unauthorize">Unauthorize sales</option>
+                                                <option className='bg-neutral' value="false info">False Information</option>
+                                                <option className='bg-neutral' value="spam">Spam</option>
+                                                <option className='bg-neutral' value="hate speech">Hate Speech</option>
+                                                <option className='bg-neutral' value="terrorism">Terrorism</option>
+                                                <option className='bg-neutral' value="violence">Violence</option>
+                                                <option className='bg-neutral' value="harasment">Harasment</option>
+                                                <option className='bg-neutral' value="something else">Something Else</option>
+                                            </select>
+                                            <div className="modal-action">
+                                                <button type="submit"><label htmlFor="my-modal" className='bg-neutral p-4 rounded-full text-white'>Submit report</label></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="suggestions container mx-auto py-2">
+                <h2 className="text-3xl font-semibold">Similar Ads</h2>
+                <div className={`grid grid-cols-1 gap-10 mt-4 py-10  ${suggestions.length === 0 ? "lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 justify-center items-center h-96" : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"}`} >
+                    {suggestions.length === 0
+                        ?
+                        <h2 className="text-5xl text-center opacity-20 font-semibold">No Similar Ads</h2>
+                        :
+                        suggestions.map((ad, index) => <ProductCard key={ad._id} book={ad}></ProductCard>)
+                    }
                 </div>
             </div>
         </div>

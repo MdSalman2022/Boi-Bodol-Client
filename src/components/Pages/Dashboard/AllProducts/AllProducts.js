@@ -68,6 +68,7 @@ const AllProducts = () => {
                             <th className='bg-secondary text-accent' >Price</th>
                             <th className='bg-secondary text-accent' >Email</th>
                             <th className='bg-secondary text-accent' >Status</th>
+                            <th className='bg-secondary text-accent' >Report</th>
                             <th className='bg-secondary text-accent' >Action</th>
                         </tr>
                     </thead>
@@ -80,6 +81,7 @@ const AllProducts = () => {
                                     <td>{myProduct.price}</td>
                                     <td>{myProduct.email}</td>
                                     <td>{myProduct.sold ? 'Sold' : "Available"}</td>
+                                    <td>{myProduct.isReported ? "Reported" : ''}</td>
                                     <td>
                                         <button onClick={() => handleDelete(myProduct)} className="btn   btn-error">Delete</button>
                                     </td>
