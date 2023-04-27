@@ -9,7 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { MdRemoveRedEye } from 'react-icons/md';
-
+import { motion } from 'framer-motion';
+import { animateScroll as scroll } from 'react-scroll'
 
 const ProductCard = ({ book, icon, grid }) => {
 
@@ -74,26 +75,32 @@ const ProductCard = ({ book, icon, grid }) => {
     }
 
 
+    const scrolltop = () => {
+        scroll.scrollToTop();
+    }
+
     return (
 
-        <div className={` transition-all duration-300 ease-in-out group relative hover:bg-accent hover:scale-105 card card-compact bg-base-100 flex flex-row  flex-wrap w-80 lg:w-full justify-center  gap-2 shadow-lg rounded-lg'} `} >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} key={_id} className={` transition-all duration-300 ease-in-out group relative hover:bg-accent hover:scale-105 card card-compact bg-base-100 flex flex-row  flex-wrap w-80 lg:w-full justify-center  gap-2 shadow-lg rounded-lg'} `} >
 
-            <figure onClick={() => handleCardDetail(_id)} className='  relative'>
+            <Link to={`/details/${_id}`} preventScrollReset={false} onClick={scrolltop}>
+                <figure className='  relative'>
 
-                <LazyLoadImage className='rounded-t-lg object-cover h-80 w-96' name="img" src={img} alt="Shoes" />
-                <div class="absolute bg-white bg-opacity-40 transition-all top-0 left-0 w-full flex flex-col justify-center items-center  opacity-0 group-hover:h-full group-hover:opacity-100 duration-300">
-                    <h1 class="text-2xl text-secondary font-bold">{name}</h1>
-                    <div class="mx-auto h-20 w-20 flex justify-center items-center">
-                        <div class="h-12 w-12 bg-base-100  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                    <LazyLoadImage className='rounded-t-lg object-cover h-80 w-96' name="img" src={img} alt="Shoes" />
+                    <div class="absolute bg-white bg-opacity-40 transition-all top-0 left-0 w-full flex flex-col justify-center items-center  opacity-0 group-hover:h-full group-hover:opacity-100 duration-300">
+                        <h1 class="text-2xl text-secondary font-bold">{name}</h1>
+                        <div class="mx-auto h-20 w-20 flex justify-center items-center">
+                            <div class="h-12 w-12 bg-base-100  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                            </div>
+                            <button class="text-center text-secondary font-semibold z-10 pointer-events-none">
+                                <MdRemoveRedEye className='text-2xl ' />
+                            </button>
                         </div>
-                        <a class="text-center text-secondary font-semibold z-10 pointer-events-none">
-                            <MdRemoveRedEye className='text-2xl ' />
-                        </a>
+
                     </div>
+                </figure>
 
-                </div>
-            </figure>
-
+            </Link>
 
             <div className="card-body py-2 relative">
                 <h2 className="card-title" name="name">{name} {icon ? icon : ''}</h2>
@@ -118,7 +125,7 @@ const ProductCard = ({ book, icon, grid }) => {
                     </div>
                 </div>
             </div>
-        </div >
+        </motion.div >
     );
 };
 

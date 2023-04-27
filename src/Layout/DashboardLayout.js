@@ -3,12 +3,15 @@ import { Link, Outlet } from 'react-router-dom';
 import ErrorPage from '../components/Pages/ErrorPage/ErrorPage';
 import Header from '../components/Shared/Header/Header';
 import { AuthContext } from '../contexts/AuthProvider/AuthProvider';
+import { motion } from 'framer-motion';
 
 const DashboardLayout = () => {
 
     const { user } = useContext(AuthContext)
 
     const [role, setRole] = useState('')
+    const [selectedTab, setSelectedTab] = useState('');
+
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_SERVER_LINK}/users?email=${user?.email}`)
@@ -21,7 +24,11 @@ const DashboardLayout = () => {
     }
     else
         return (
-            <div className='my-5'>
+            <motion.div className=' '
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+            >
 
                 <Header></Header>
                 <div className="drawer drawer-mobile container mx-auto ">
@@ -63,7 +70,7 @@ const DashboardLayout = () => {
 
                     </div>
                 </div>
-            </div>
+            </motion.div>
         );
 };
 

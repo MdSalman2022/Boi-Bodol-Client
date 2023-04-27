@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { GoogleAuthProvider } from 'firebase/auth';
+import { motion } from 'framer-motion';
 
 const Login = () => {
 
@@ -81,7 +82,11 @@ const Login = () => {
 
 
     return (
-        <div className=' my-20'>
+        <motion.div className=' my-20'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: 10 }}
+            exit={{ opacity: 0 }}
+        >
             <div className="w-96 p-8 space-y-3 rounded-xl bg-transparent border-2 border-secondary mx-auto">
                 <h1 className="text-3xl font-semibold text-center text-neutral">Login</h1>
                 <form onSubmit={handleSubmit(handleLogin)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
@@ -128,7 +133,7 @@ const Login = () => {
                     <Link to='/register' rel="noopener noreferrer" href="#" className="underline font-bold">Sign up</Link>
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

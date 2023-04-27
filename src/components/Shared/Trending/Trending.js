@@ -4,6 +4,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import ProductCard from '../../Pages/ProductCard/ProductCard';
+import { animateScroll as scroll } from 'react-scroll'
 
 
 const Trending = () => {
@@ -30,6 +31,10 @@ const Trending = () => {
 
     console.log(books);
 
+    const scrolltop = () => {
+        scroll.scrollToTop();
+    }
+
     return (
         <div className=' bg-secondary my-5'>
             <div className=" py-8 bg-transparent rounded-xl mx-2 lg:mx-auto text-center">
@@ -42,7 +47,7 @@ const Trending = () => {
 
             </div>
             <div className='flex justify-center items-center'>
-                <Link to="/allads"><button className="btn btn-neutral border-none text-white hover:bg-secondary my-10">See More</button></Link>
+                <Link to="/allads" onClick={scrolltop}><button className="btn btn-neutral border-none text-white hover:bg-secondary my-10">See More</button></Link>
 
             </div>
         </div>

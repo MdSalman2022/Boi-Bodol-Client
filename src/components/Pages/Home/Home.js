@@ -6,16 +6,31 @@ import HeroSection from '../../Shared/HeroSection/HeroSection';
 import Trending from '../../Shared/Trending/Trending';
 import CategoryList from '../Category/CategoryList';
 import Testimonial from './Testimonial';
+import { motion, useScroll } from 'framer-motion';
+import { animateScroll as scroll } from 'react-scroll'
+
 
 const Home = () => {
+    const { scrollYProgress } = useScroll();
 
+    const scrolltop = () => {
+        scroll.scrollToTop();
+    }
 
     return (
-        <div className=" mx-auto ">
+        <motion.div className=" mx-auto "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
+            <motion.div
+                className="progress-bar bg-red-500"
+                style={{ scaleX: scrollYProgress }}
+            />
             <HeroSection />
             {/* <SearchBox></SearchBox> */}
-            <div className="font-semibold text-center flex justify-center lg:hidden my-2">
-                <LazyLoadImage src="https://i.ibb.co/NsGx83q/logoboi.png" className='w-44' alt="logo" border="0" />
+            <div className="font-semibold text-center flex justify-center lg:hidden my-2 ">
+                <LazyLoadImage src="https://i.ibb.co/1TxVmL3/boipaben-logo.png" className='w-40' alt="logo" border="0" />
             </div>
 
             <CategoryList></CategoryList>
@@ -26,10 +41,10 @@ const Home = () => {
             </div>
             <AllBooks />
             <div className='flex justify-center items-center'>
-                <Link to="/allads"><button className="btn btn-neutral border-none text-white hover:bg-secondary my-10">See More</button></Link>
+                <Link to="/allads" onClick={scrolltop}><button className="btn btn-neutral border-none text-white hover:bg-secondary my-10">See More</button></Link>
             </div>
             <Testimonial />
-        </div>
+        </motion.div>
     );
 };
 

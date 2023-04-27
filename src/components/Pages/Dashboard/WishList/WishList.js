@@ -3,6 +3,8 @@ import { MdRemoveRedEye } from 'react-icons/md';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
+import { animateScroll as scroll } from 'react-scroll'
+
 
 const WishList = () => {
 
@@ -14,8 +16,12 @@ const WishList = () => {
         fetch(`${process.env.REACT_APP_SERVER_LINK}/wishlist?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setCart(data))
-    }, [user?.email])
+    }, [user?.email, cart])
 
+
+    const scrolltop = () => {
+        scroll.scrollToTop();
+    }
 
     return (
         <div>
@@ -38,7 +44,7 @@ const WishList = () => {
                     <tbody>
                         {cart &&
                             cart?.map((product, index) =>
-                                <tr>
+                                <tr key={product._id}>
                                     <th>{index + 1}</th>
                                     <td><LazyLoadImage src={product.img} alt="" className='w-20 rounded-xl' /></td>
                                     <td>{product.name}</td>
@@ -47,11 +53,11 @@ const WishList = () => {
                                     <td>{product.time}</td>
                                     <td>{product.sold ? "Sold" : "Available"}</td>
                                     <td>
-                                        <Link to={`/details/${product.pId}`}>
-                                            <div class="b mx-auto h-20 w-20 flex justify-center items-center">
-                                                <div class="i h-12 w-12 bg-white  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
+                                        <Link to={`/details/${product.pId}`} onClick={scrolltop}>
+                                            <div className="b mx-auto h-20 w-20 flex justify-center items-center">
+                                                <div className="i h-12 w-12 bg-white  items-center rounded-full shadow-2xl cursor-pointer absolute overflow-hidden transform hover:scale-110 transition duration-300 ease-out">
                                                 </div>
-                                                <button class="text-center text-secondary font-semibold z-10 pointer-events-none">
+                                                <button className="text-center text-secondary font-semibold z-10 pointer-events-none">
                                                     <MdRemoveRedEye className='text-2xl ' />
                                                 </button>
                                             </div>

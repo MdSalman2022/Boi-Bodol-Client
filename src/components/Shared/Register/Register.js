@@ -4,10 +4,12 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
 
 
 const Register = () => {
 
+    
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { createUser, updateUser, providerLogin } = useContext(AuthContext)
@@ -88,7 +90,11 @@ const Register = () => {
 
 
     return (
-        <div className=' my-20'>
+        <motion.div className=' my-20'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: 10 }}
+            exit={{ opacity: 0 }}
+        >
             <div className="w-96 p-8 space-y-3 rounded-xl bg-transparent border-2 border-secondary mx-auto">
                 <h1 className="text-3xl font-semibold text-center text-neutral">Register</h1>
                 <form onSubmit={handleSubmit(handleSignUp)} novalidate="" action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
@@ -142,7 +148,7 @@ const Register = () => {
                     <Link to='/login' rel="noopener noreferrer" href="#" className="underline">Sign in</Link>
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

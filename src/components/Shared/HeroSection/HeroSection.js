@@ -2,15 +2,25 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { BsChevronDoubleDown } from 'react-icons/bs';
+import { motion } from 'framer-motion';
+import { animateScroll as scroll } from 'react-scroll'
 
 const HeroSection = () => {
 
     const { user } = useContext(AuthContext)
 
 
+    const scrolltop = () => {
+        scroll.scrollToTop();
+    }
+
     return (
-        <div className='transition-opacity duration-500 opacity-100 ease-in-out delay-500'>
-            <div className={`relative hero min-h-screen bg-opacity-0 transition-all bg-opacity-100 duration-300 ${user ? "hidden" : ""}`} style={{ backgroundImage: `url("https://i.ibb.co/Ny6JrTL/book.jpg")` }}>
+        <motion.div className='transition-opacity duration-500 opacity-100 ease-in-out delay-500'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
+            <div className={`relative hero min-h-screen bg-opacity-0 transition-all bg-opacity-100 duration-300 ${user ? "hidden" : ""}`} style={{ backgroundImage: `url("https://i.ibb.co/R0CXcP1/book.webp")` }}>
                 {/* <div className="hero-overlay  "></div> */}
                 <div className="hero-content text-center text-neutral-content flex flex-col ">
                     <h1 className='lg:text-5xl text-2xl text-white'>Got no place to keep your <span className="font-semibold text-neutral">old unnecessary</span> books?</h1>
@@ -20,7 +30,7 @@ const HeroSection = () => {
                     <h1 className='lg:text-7xl text-2xl font-bold text-neutral drop-shadow-lg'>You've come to the <span className='bg-neutral text-base-100 rounded-xl px-3 py-2'>right place</span></h1>
 
                     <div className="max-w-md text-white grid lg:grid-cols-3 justify-items-center gap-5 lg:gap-52 mt-10">
-                        <Link to="/allads"><button className="w-52 mx-2 btn btn-neutral hover:btn-secondary text-secondary text-lg font-bold ">Buy Books</button></Link>
+                        <Link to="/allads" onClick={scrolltop}><button className="w-52 mx-2 btn btn-neutral hover:btn-secondary text-secondary text-lg font-bold ">Buy Books</button></Link>
                         <Link to="/dashboard/addproduct"><button className="w-52 mx-2 btn btn-neutral hover:btn-secondary text-secondary  text-lg font-bold">Sell Books</button></Link>
                         <button className="w-52 mx-2 btn btn-neutral hover:btn-secondary text-secondary  text-lg font-bold">Exchange Books</button>
                     </div>
@@ -30,7 +40,7 @@ const HeroSection = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </motion.div >
     );
 };
 

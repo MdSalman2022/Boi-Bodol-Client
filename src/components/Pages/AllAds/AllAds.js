@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import ProductCard from '../ProductCard/ProductCard';
 import { CiGrid41, CiGrid2H } from 'react-icons/ci';
+import { motion } from 'framer-motion';
 
 const AllAds = () => {
 
@@ -76,7 +77,11 @@ const AllAds = () => {
 
 
     return (
-        <div className='mx-auto max-w-screen-2xl  '>
+        <motion.div className='mx-auto max-w-screen-2xl  '
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
 
             <section className='text-center h-96 flex flex-col justify-center  border-b-2 border-neutral '>
                 <h1 className='text-5xl font-bold text-neutral'>Find the right item for you</h1>
@@ -144,7 +149,7 @@ const AllAds = () => {
                     )
                 }
             </div>
-        </div >
+        </motion.div >
     );
 };
 

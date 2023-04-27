@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { MdReport } from 'react-icons/md';
 import ProductCard from '../../Pages/ProductCard/ProductCard';
+import { motion } from 'framer-motion';
 
 
 const CardDetail = () => {
@@ -124,7 +125,11 @@ const CardDetail = () => {
 
 
     return (
-        <div className="bg-base-100">
+        <motion.div className="bg-base-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -157,7 +162,7 @@ const CardDetail = () => {
 
                 {/* Image gallery */}
                 <div className="mx-auto flex justify-center ">
-                    <div className="w-80 h-full hidden overflow-hidden rounded-lg lg:block ">
+                    <div className="w-80 h-full overflow-hidden rounded-lg lg:block ">
                         <LazyLoadImage
                             src={img}
                             alt="book"
@@ -167,8 +172,8 @@ const CardDetail = () => {
                 </div>
 
                 {/* Product info */}
-                <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
-                    <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex justify-between">
+                <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid grid-cols-1 lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
+                    <div className="col-span-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex justify-between">
                         <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{name}</h1>
                         <div>
                             <p className='mx-1 badge uppercase text-secondary'>{condition}</p>
@@ -179,23 +184,18 @@ const CardDetail = () => {
                     </div>
 
                     {/* Options */}
-                    <div className="mt-4 lg:row-span-3 lg:mt-0">
+                    <div className="mt-4 col-span-1 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
                         <p className="text-3xl tracking-tight text-gray-900">Price: {price}Tk
-                            <div className={`badge badge-md  text-secondary ${nagotiable === true ? "" : "hidden"}`}>{`${nagotiable === true ? "Nagotiable" : ''}`}</div>
+                            <div className={`badge badge-md mx-2 text-secondary ${nagotiable === true ? "" : "hidden"}`}>{`${nagotiable === true ? "Nagotiable" : ''}`}</div>
                         </p>
 
-                        <form className="mt-10">
+                        <form className="mt-2 lg:mt-10">
                             {/* Colors */}
                             <div>
                                 <h3 className="text font-semibold text-gray-900">For sale by: <span className="font-normal">{sname}</span> </h3>
                                 <h3 className="text font-semibold text-gray-900">Contact: <span className="font-normal">{phoneNo}</span> </h3>
                                 <h3 className="text font-semibold text-gray-900">Email: <span className="font-normal">{email}</span> </h3>
-                                {/* <p>For sale by: {sname}</p>
-                                <p>{phoneNo}</p>
-                                <p>{email}</p>
-
-                                <p>{urgent}</p>*/}
                                 <p className='font-bold'>Posted :
                                     {(parseInt(new Date() - new Date(dateAdded)) / (1000 * 60 * 60)).toFixed(0) > 24
                                         ?
@@ -215,7 +215,7 @@ const CardDetail = () => {
                                 </p>
 
                             </div>
-                            <div className="divider"></div>
+                            <div className="divider hidden lg:flex"></div>
                             {/* Sizes */}
                             <div className="">
                                 <div className="flex items-center justify-between">
@@ -225,7 +225,7 @@ const CardDetail = () => {
                                 </div>
                             </div>
 
-                            <button disabled={isAdded.length > 0 ? true : false} onClick={(event) => handleBooking(event, details)} class="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-secondary transition duration-300 ease-out border-2 border-neutral rounded-full shadow-md group">
+                            <button disabled={isAdded.length > 0 ? true : false} onClick={(event) => handleBooking(event, details)} class="relative flex justify-center items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-secondary transition duration-300 ease-out border-2 border-neutral rounded-full shadow-md group">
                                 <span class={`absolute inset-0 flex items-center justify-center w-full h-full duration-300 -translate-x-full bg-neutral ${isAdded.length > 0 ? "" : "group-hover:translate-x-0"}  ease`}>
                                     <GrAdd className='text-secondary' />
                                 </span>
@@ -250,7 +250,7 @@ const CardDetail = () => {
                                 <p className='text-lg font-semibold'>Edition: <span className="font-normal">{edition}</span></p>
                                 <p className='text-lg font-semibold'>Courier: <span className='font-normal'>{courier ? 'Available' : 'Not Available'}</span></p>
                                 {/* <button htmlFor="my-modal"  onClick={() => handleReport(details)} className="btn btn-ghost text-error btn-outline text-2xl"><MdReport /> Report ad</button> */}
-                                <label htmlFor="my-modal" className="btn  btn-ghost text-error btn-outline text-2xl"><MdReport /> Report ad</label>
+                                <label htmlFor="my-modal" className="btn btn-ghost text-error btn-outline lg:text-2xl"><MdReport /> Report ad</label>
 
                                 {/* Put this part before </body> tag */}
                                 <input type="checkbox" id="my-modal" className="modal-toggle" />
@@ -281,8 +281,8 @@ const CardDetail = () => {
                 </div>
             </div>
             <div className="suggestions container mx-auto py-2">
-                <h2 className="text-3xl font-semibold">Similar Ads</h2>
-                <div className={`grid grid-cols-1 gap-10 mt-4 py-10  ${suggestions.length === 0 ? "lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 justify-center items-center h-96" : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"}`} >
+                <h2 className="text-3xl font-semibold mx-auto lg:mx-0 text-center lg:text-left">Similar Ads</h2>
+                <div className={`grid grid-cols-1 lg:gap-10 mt-4 lg:py-10 justify-items-center items-center py-5 gap-5 ${suggestions.length === 0 ? "lg:grid-cols-1 md:grid-cols-1h-96" : "  md:grid-cols-3 lg:grid-cols-4 "}`} >
                     {suggestions.length === 0
                         ?
                         <h2 className="text-5xl text-center opacity-20 font-semibold">No Similar Ads</h2>
@@ -291,7 +291,7 @@ const CardDetail = () => {
                     }
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 };
 

@@ -16,18 +16,8 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 8000)
-    }, [])
-
-
     if (loading) {
-        <SyncLoader color={'#F97F40'} loading={loading} // cssOverride={override}
-            size={15}
-            data-testid="loader"
-        />
+        <progress className="progress w-56"></progress>
     }
 
 
