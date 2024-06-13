@@ -1,45 +1,21 @@
-
 ## `Site Name` BUYANDSELL24 - This site is about used product Buy sell.
-Site link: Open [https://buysell-a13b9.web.app/](https://buysell-a13b9.web.app/) to view it in your browser.
-Server link: [${process.env.REACT_APP_SERVER_LINK}](${process.env.REACT_APP_SERVER_LINK}) to view it in your browser.
 
+Site link: Open [https://boi-bodol.web.app/](https://boi-bodol.web.app/) to view it in your browser.
+Server link: [${process.env.REACT_APP_SERVER_LINK}](${process.env.REACT_APP_SERVER_LINK}) to view it in your browser.
 
 ## `Admin Info`
 
 adminEmail: \<admin@admin.com\>
 
-adminPassword: \<ADMIN@admin1\>
-
-
+adminPassword: \<adminadmin\>
 
 ## `Admin Info`
+
 -Admin email: admin@admin.com\
--admin pass: ADMIN@admin1
-
-
-
-### `Features`
-- Login
-- Register
-- Private Route
-- Manage Review
-- Review List
-- Add product
-- Post Review
-- 404 Page
-- FAQ 
-- Blog page
-- Google login
-- Email password registration
-- Data collect from MongoDB
-- Photo view 
-- Dynamic page title
-- React Query
-- Stripe
-
-
+-admin pass: adminadmin
 
 ### `Functionality and Library Used`
+
 - MongoDB CRUD operation
 - Tailwind
 - Daisy UI
@@ -47,8 +23,6 @@ adminPassword: \<ADMIN@admin1\>
 - Express Js
 - Cors
 - Vercel
-
-
 
 # Getting Started with Create React App
 
@@ -120,5 +94,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
 # b612-used-products-resale-clients-side-MdSalman2022
+
 # Boi-Bodol-Client
